@@ -2,7 +2,7 @@
 <html lang="en" ng-app="currencySwapApp">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
@@ -11,16 +11,25 @@
 
     <link href="assets/css/header.style.css" rel="stylesheet">
     <link href="assets/css/style.default.css" rel="stylesheet">
+    <link href="assets/css/order.style.css" rel="stylesheet">
+    <link href="assets/css/myprofile.css" rel="stylesheet">
+    <link href="assets/css/bankInfo-modal.css" rel="stylesheet">
+    <link href="assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" >
+    <link href="assets/css/rate-management-panel.css" rel="stylesheet">
 
-    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/url-pattern/lib/url-pattern.js"></script>
     <script src="bower_components/validator-js/validator.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
-    <script src="bower_components/ng-file-upload/ng-file-upload-shim.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
+    <script src="bower_components/angular-base64/angular-base64.min.js"></script>
+    <script src="assets/js/mobile-detect/mobile-detect.min.js"></script>
+    <script src="bower_components/crypto-js/crypto-js.js"></script>
 
     <script src="app/libs/global.js"></script>
     <script src="app/libs/router.js"></script>
@@ -34,17 +43,20 @@
     <script src="app/shared/error-page/error-page.module.js"></script>
     <script src="app/shared/error-page/error-page.directive.js"></script>
 
+    <script src="app/shared/footer/footer.module.js"></script>
+    <script src="app/shared/footer/footer.directive.js"></script>        
+
     <script src="app/components/permissions/permission.module.js"></script>
     <script src="app/components/navigation/navigation.module.js"></script>
 
 
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
-    <script src="config/api-routes.js"></script>
-    <script src="config/setting.js"></script>
-    <script src="config/error-codes.js"></script>
+    <script src="assets/js/gens/api-routes.js"></script>
+    <script src="assets/js/gens/setting.js"></script>
+    <script src="assets/js/gens/error-codes.js"></script>
 
-
+    <script src="app/libs/common.module.js"></script>
     <script src="app/components/cookie-manager/cookies-manager.module.js"></script>
     <script src="app/components/home/home.module.js"></script>
 
@@ -67,11 +79,44 @@
     <script src="app/components/usersList/userList.service.js"></script>
     <script src="app/components/usersList/userList.component.js"></script>
 
+    <script src="app/components/user-details/user-details.module.js"></script>
+    <script src="app/components/user-details/user-details.component.js"></script>
+    <script src="app/components/user-details/user-details.service.js"></script>
+
     <script src="app/components/myProfile/myProfile.module.js"></script>
     <script src="app/components/myProfile/myProfile.component.js"></script>
+    <script src="app/components/myProfile/myProfile.service.js"></script>
     <script src="assets/js/angular-country-state.min.js"></script>
     <script src="assets/js/country_directive.js"></script>
 
+    <script src="app/components/help/help.module.js"></script>
+    <script src="app/components/help/help.component.js"></script>
+
+    <script src="app/components/support/support.module.js"></script>
+    <script src="app/components/support/support.component.js"></script>
+    <script src="app/components/support/support.service.js"></script>
+
+    <script src="app/shared/error-page/error-page.module.js"></script>
+    <script src="app/shared/error-page/error-page.directive.js"></script>
+
+    <script src="app/components/notification/notification.module.js"></script>
+    <script src="app/components/notification/notification.component.js"></script>
+    <script src="app/components/notification/notification.service.js"></script>
+
+    <script src="app/components/orders/ordersList.module.js"></script>
+    <script src="app/components/orders/ordersList.component.js"></script>
+    <script src="app/components/orders/orderCreate.component.js"></script>
+    <script src="app/components/orders/orderDetail.component.js"></script>
+    <script src="app/components/orders/orderEdit.component.js"></script>
+    <script src="app/components/orders/orders.service.js"></script>
+
+    <script src="app/components/invitation/invitation.module.js"></script>
+    <script src="app/components/invitation/invitation.component.js"></script>
+    <script src="app/components/invitation/invitation.service.js"></script>
+
+    <script src="app/components/rate-management/rateManagement.module.js"></script>
+    <script src="app/components/rate-management/rateManagement.component.js"></script>
+    <script src="app/components/rate-management/rateManagement.service.js"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="assets/js/html5shiv.js"></script>
@@ -79,7 +124,7 @@
     <![endif]-->
 </head>
 
-<body class="horizontal-menu">
+<body class="{{loggedIn ? 'horizontal-menu' : 'signin' }}">
 <!-- Preloader -->
 <div id="preloader">
     <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
@@ -91,21 +136,23 @@
 
     <left-panel ng-if="loggedIn"></left-panel>
 
-    <div class="mainpanel">
-
-        <div class="headerbar" ng-if="loggedIn">
+    <div class="mainpanel" ng-if="loggedIn">
+        <div class="headerbar">
             <header-left></header-left>
             <header-right></header-right>
         </div><!-- headerbar -->
 
-        <page-header ng-if="loggedIn"></page-header>
+        <page-header></page-header>
 
-        <div class="contentpanel">
+        <div class="container-fluid contentpanel">
             <!-- content goes here... -->
             <error-page ng-if="error"></error-page>
             <div ng-view ng-if="!isLoading && !error"></div>
         </div>
     </div><!-- mainpanel -->
+
+    <div ng-view ng-if="!loggedIn && !isLoading"></div>
+
 </section>
 
 <script src="assets/js/jquery-1.11.1.min.js"></script>
@@ -121,5 +168,8 @@
 <script src="assets/js/jquery.datatables.min.js"></script>
 <script src="assets/js/select2.min.js"></script>
 
+<script src="/socket.io/socket.io.js"></script>
+<script src="assets/js/sub_pub.js"></script>
+<script src="assets/js/WebSocketHandler.js"></script>
 </body>
 </html>

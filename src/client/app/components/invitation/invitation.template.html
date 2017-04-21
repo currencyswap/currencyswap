@@ -1,0 +1,61 @@
+<div class="signinpanel" ng-hide="isSubmitSuccess" ng-if="isSubmitEmailForm">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="signin-info">
+                <div class="logopanel">
+                    <h1><span>[</span> {{title}} <span>]</span></h1>
+                </div><!-- logopanel -->
+            </div><!-- signin0-info -->
+        </div>
+    </div>
+    <div class="mb20"></div>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                Please fill your invitee's <strong>email</strong> to send him/her a link to register
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <form name="userForm" ng-submit="submitEmail(submittedEmail)" novalidate style="background-color: white">
+                <!-- EMAIL -->
+                <div class="form-group" ng-class="{ 'has-error' : (userForm.email.$invalid && !userForm.email.$pristine) || (isEmailExisted && !userForm.email.$pristine)}">
+                    <input ng-change="onTextBoxChange()" type="email" name="email" class="form-control" ng-model="submittedEmail" placeholder="example@gmail.com" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.EMAIL_MIN}}" maxlength="64" required>
+                    <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+                    <p ng-show="(isEmailExisted)" class="help-block">This email is existed</p>
+                </div>
+                <button type="submit" class="btn btn-block btn-success" ng-disabled="userForm.$invalid">Invite</button>
+                <div class="mb10"></div>
+                <div class="loaders" align="center" ng-show="gifLoading">
+                    <img src="../../../assets/images/loaders/loader1.gif" alt="">
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer></footer>
+</div>
+
+<div ng-show="isSubmitSuccess">
+
+    <div class="col-md-2">
+
+    </div>
+
+    <div class="col-md-8">
+        <br>
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="panel-btns">
+                </div><!-- panel-btns -->
+                <h3 class="panel-title">Your invitation link has been sent to your friend</h3>
+            </div>
+            <div class="panel-body">
+                We sent an email with the invitation url to invitee's email, please let invitee know about that and check his/her mail box for further processing.
+            </div>
+        </div>
+
+        <footer></footer>
+    </div>
+</div><!-- row -->

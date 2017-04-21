@@ -1,0 +1,78 @@
+<!-- Modal content-->
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel()">&times;</button>
+        <h4 class="modal-title">{{item.title}}</h4>
+    </div>
+    <div class="modal-body">
+
+        <p class="msg-content" data-ng-bind-html="item.message2" data-ng-if="item.orderCode"
+           data-ng-click="closeDetail($event)"></p>
+        <p class="msg-content" data-ng-if="!item.orderCode && !item.exrateMsg">{{item.message}}</p>
+
+        <div class="msg-content" data-ng-if="item.exrateMsg">
+            <div class="table-responsive tableExRate">
+                <table class="table table-success mb30">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Buy</th>
+                        <th>Median</th>
+                        <th>Sell</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="currencyTitle"><span style="white-space: nowrap;">US Dollar</span></td>
+                        <td>
+                            <input class="inputRate" type="text" value="{{item.exrateMsg.usDollarBuy}}" readonly>
+                        </td>
+                        <td>
+                            <input class="inputRate medianRate" type="text" value="{{item.exrateMsg.usDollarMedian}}" readonly>
+                            <label class="mideUsRateChange" style="color: {{item.exrateMsg.mideUsRateChange >= 0 ? 'blue' : 'red'}}">{{item.exrateMsg.mideUsRateChange}}</label>
+                        </td>
+                        <td>
+                            <input class="inputRate" type="text" value="{{item.exrateMsg.usDollarSell}}" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="currencyTitle"><span>Pound</span></td>
+                        <td>
+                            <input class="inputRate" type="text" value="{{item.exrateMsg.poundBuy}}" readonly>
+                        </td>
+                        <td>
+                            <input class="inputRate medianRate" type="text" value="{{item.exrateMsg.poundMedian}}" readonly>
+                            <label class="mideUsRateChange" style="color: {{item.exrateMsg.midePoRateChange >= 0 ? 'blue' : 'red'}}" >{{item.exrateMsg.midePoRateChange}}</label>
+                        </td>
+                        <td>
+                            <input class="inputRate" type="text" value="{{item.exrateMsg.poundSell}}" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="currencyTitle"><span>Euro</span></td>
+                        <td>
+                            <input class="inputRate" type="text" value="{{item.exrateMsg.euroBuy}}" readonly>
+                        </td>
+                        <td>
+                            <input class="inputRate medianRate" type="text" value="{{item.exrateMsg.euroMedian}}" readonly>
+                            <label class="mideUsRateChange" style="color: {{item.exrateMsg.mideEuRateChange >= 0 ? 'blue' : 'red'}}">{{item.exrateMsg.mideEuRateChange}}</label>
+                        </td>
+                        <td>
+                            <input class="inputRate" type="text" value="{{item.exrateMsg.euroSell}}" readonly>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div><!-- table-responsive -->
+        </div>
+        <div class="msg-issue">
+            <small class="text-muted">Sender: <strong>{{item.creator.username}}</strong></small>
+            <small class="text-muted"> - {{item.created | date : 'MMM dd, yyyy hh:mm a'}}</small>
+            <br>
+        </div>
+
+        <div class="modal-footer" style="clear:both;">
+            <button class="btn btn-primary" type="button" data-ng-click="cancel()">OK</button>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 'use-strict';
 
-angular.module('register', ['ngRoute', 'cookieManager', 'permission', 'navigation', 'angularCountryState'])
+angular.module('register', ['ngRoute', 'cookieManager', 'permission', 'navigation', 'angularCountryState', 'base64'])
     .directive('ngMatch', ['$parse', function ($parse) {
         var directive = {
             link: link,

@@ -3,11 +3,9 @@
   "base": "PersistedModel",
   "idInjection": true,
   "indexes": {
-    "orderId_activityId_index": {
-      "columns": "orderId, activityId",
-      "options": {
-        "unique": true
-      }
+    "ORDER_ACTIVITY_ID_UNQ_IDX": {
+      "columns": "orderId, creatorId, statusId",
+      "kind": "unique"
     }
   },
   "options": {
@@ -16,24 +14,45 @@
   "properties": {
     "orderId": {
       "type": "number",
-      "required": true
+      "required": true,
+      "id": true
     },
-    "activityId": {
+    "creatorId": {
       "type": "number",
-      "required": true
+      "required": true,
+      "id": true
+    },
+    "statusId": {
+      "type": "number",
+      "required": true,
+      "id": true
+    },
+    "created": {
+      "type": "date",
+      "required": true,
+      "defaultFn": "now"
+    },
+    "description": {
+      "type": "string",
+      "length": 256
     }
   },
   "validations": [],
   "relations": {
+    "creator": {
+      "type": "belongsTo",
+      "model": "Member",
+      "foreignKey": "creatorId"
+    },
     "order": {
       "type": "belongsTo",
       "model": "Order",
       "foreignKey": "orderId"
     },
-    "activity": {
+    "status": {
       "type": "belongsTo",
-      "model": "Activity",
-      "foreignKey": "activityId"
+      "model": "StatusType",
+      "foreignKey": "statusId"
     }
   },
   "acls": [],

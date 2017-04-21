@@ -7,6 +7,8 @@ angular.module('homePage', ['ngRoute', 'ngCookies'])
             '$http',
             '$location',
             '$cookies', function ($scope, $rootScope, $http, $location, $cookies) {
+        	
+        	console.log('----Homepage----');
 /*
                 var userPermissions = $rootScope.permissions;
                 var redirectTo = null;

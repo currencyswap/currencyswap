@@ -1,0 +1,70 @@
+{
+  "name": "Message",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "indexes": {
+    "MESSAGE_OWNER_ID_IDX": {
+      "columns": "creatorId"
+    },
+    "MESSAGE_RECEIVER_ID_IDX": {
+      "columns": "receiverId"
+    }
+  },
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "creatorId": {
+      "type": "number",
+      "required": true
+    },
+    "created": {
+      "type": "date",
+      "required": true,
+      "defaultFn": "now"
+    },
+    "receiverId": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "isGroupMessage": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "title": {
+      "type": "string",
+      "length": 128,
+      "required": true
+    },
+    "orderCode": {
+      "type": "string",
+      "length": "64"
+    },
+    "message": {
+      "type": "string",
+      "length": 4096
+    }
+  },
+  "validations": [],
+  "relations": {
+    "receiver": {
+      "type": "belongsTo",
+      "model": "Member",
+      "foreignKey": "receiverId"
+    },
+    "creator": {
+      "type": "belongsTo",
+      "model": "Member",
+      "foreignKey": "creatorId"
+    },
+    "reads": {
+      "type": "hasMany",
+      "model": "MessageRead",
+      "foreignKey": "messageId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

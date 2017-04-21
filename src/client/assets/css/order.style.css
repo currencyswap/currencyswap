@@ -1,0 +1,394 @@
+.createOrderPanel .submit-error{
+	color: #ff0000;
+}
+
+.createOrderPanel .give-row input.form-control,
+.createOrderPanel .give-row select.form-control,
+.createOrderPanel .get-row input.form-control,
+.createOrderPanel .get-row select.form-control{
+	width: 300px !important;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.createOrderPanel .rate-row .alert.suggestion-rate p{
+	font-size: small;
+}
+
+.createOrderPanel .rate-row .alert.suggestion-rate{
+	width: 612px !important;
+	border-radius: 0px;
+	padding: 5px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+.createOrderPanel .rate-row input.form-control{
+	width: 612px !important;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+.createOrderPanel .panel .panel-body,
+  .detailOrderPanel{
+    padding: 20px 10px;
+  }
+
+@media screen and (max-width: 767px) {
+	.createOrderPanel .rate-row .alert.suggestion-rate p{
+		font-size: small;
+	}
+
+	.createOrderPanel .rate-row input.form-control,
+	.createOrderPanel .rate-row .alert.suggestion-rate{
+		width: 300px !important;
+		border-radius: 0px;
+		padding: 5px;
+		margin-bottom: 5px;
+		margin-top: 5px;
+	}
+}
+
+.order-content  {
+ text-align: center;
+ margin: 10px auto !important;
+}
+.order-content .order-tabs {
+ 	float: none;
+ 	margin: auto;
+ 	width: 100%;
+}
+.order-status-1 {
+	color: #6299e8;	
+}
+.order-status-2 {
+	color: #159d21;
+}
+.order-status-3{
+	
+	color: #366144;
+}
+.order-status-4{
+	color: #b17197;
+}
+.order-status-5{
+	color: #fea340;
+}
+.order-status-6{
+	color: #ff0658;
+}
+
+.order-content .user-status-0 {
+	color: #159d21;
+}
+
+.order-content .user-status-1{
+	color: #fea340;
+}
+.order-content .user-status-2{
+	color: #9d000e;
+}
+.order-content .order-item-header {
+	background: #cccccc;
+	white-space: nowrap;
+}
+.order-content .order-item-content {
+	text-align: left;
+}
+.button-order-list {
+	float: left;
+	border-radius: 5px;
+	width: 60px;
+	padding: 2px 5px;
+	margin: 2px;
+	font-size: 12px;	
+}
+.order-content .order-item-content.order-date {
+	white-space: nowrap;
+}
+.button-order-list.button-cancel-swapping {
+	background: #fea340;
+	
+}
+.button-order-list.button-confirm-swapping {
+	background: #159d21;
+	color: #ffffff;
+}
+.button-order-list.button-cancel-confirm {
+	background: #fea340;
+	
+}
+.button-order-list.button-clear-confirm {
+	background: #366144;
+	color: #ffffff;
+}
+.button-order-list.button-cancel-submitted {
+	background: #fea340;
+	
+}
+.button-order-list.button-edit-submitted {
+	background: #ff0658;
+	color: #ffffff;
+}
+
+.order-action {
+	position: relative;
+	float: right;
+	width: 130px;
+}
+.order-row-0 {
+	background: white;
+}
+.order-row-1 {
+	background: #e6e6e6;
+}
+
+/*Order detail start*/
+.detailOrderPanel .panel .panel-body{
+	padding: 20px 5px;
+}
+.detailOrderPanel .panel .panel-title{
+	color: #b17197;
+    font-size: 22px;
+    font-weight: bold;
+}
+.detailOrderPanel .row-order-status{
+	display: inline-flex;
+	margin-bottom: 20px;
+}
+.detailOrderPanel .row-order-status .col-order-status{
+	width: 72px;
+	float: left;
+}
+
+.detailOrderPanel .row-order-status .col-order-status .order-status-label {
+    width: 72px;
+    text-align: center;
+}
+
+.detailOrderPanel .row-order-status .col-order-status .order-status-item{
+	height : 12px;
+	width: 12px;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 6px;
+	margin: 3px auto;
+	
+}
+
+.detailOrderPanel .row-order-status .col-order-status.order-status-current .order-status-label{
+	font-weight: bold;
+}
+
+.detailOrderPanel .row-order-status .col-order-status.order-status-current .order-status-item{
+	height: 16px;
+	width: 16px;
+	border-radius: 8px;
+	margin: 1px auto;
+}
+.detailOrderPanel .row-order-status .col-order-status.order-status-1.order-status-current .order-status-item {
+	background-color: #6299e8;	
+}
+.detailOrderPanel .row-order-status .col-order-status.order-status-2.order-status-current .order-status-item{
+	background-color: #159d21;
+}
+.detailOrderPanel .row-order-status .col-order-status.order-status-3.order-status-current .order-status-item{
+	background-color: #366144;
+}
+.detailOrderPanel .row-order-status .col-order-status.order-status-4.order-status-current .order-status-item{
+	background-color: #b17197;
+}
+.detailOrderPanel .row-order-status .col-order-status.order-status-5.order-status-current .order-status-item{
+	background-color: #fea340;
+}
+.detailOrderPanel .row-order-status .col-order-status.order-status-6.order-status-current .order-status-item{
+	background-color: #ff0658;
+}
+
+.detailOrderPanel .row-order-status .col-order-line{
+	width: 60px;
+	float: left;
+}
+
+.detailOrderPanel .row-order-status .col-order-line .order-line{
+	height : 2px;
+	min-width: 20px;
+	border-radius: 1px;
+	margin: 8px 0px;
+	background-color: #6b6b6b;
+	width: 60px;
+}
+
+.detailOrderPanel .row-order-status .col-order-line.col-order-line-pass .order-line{
+	height : 4px;
+	margin: 7px 0px;
+	background-color: #000000;
+}
+
+@media screen and (min-width: 641px) {
+	.detailOrderPanel .panel .panel-body{
+		padding: 20px;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.detailOrderPanel .row-order-status .col-order-line .order-line,
+	.detailOrderPanel .row-order-status .col-order-line{
+		width: 60px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.createOrderPanel .panel .panel-body,
+	.createOrderPanel .panel .panel-heading,
+	.detailOrderPanel,
+	.detailOrderPanel .panel .panel-heading{
+		padding: 20px 10px;
+	}
+
+	.detailOrderPanel .row-order-status .col-order-line .order-line,
+	.detailOrderPanel .row-order-status .col-order-line{
+		width: 20px;
+	}
+	.detailOrderPanel .row-order-status .col-order-status{
+		width: 45px;
+		margin-right: 2px;
+		margin-left: 2px;
+	}
+	.detailOrderPanel .row-order-status .col-order-status .order-status-label {
+	    width: 45px;
+	    text-align: center;
+	    white-space: nowrap;
+	    text-overflow: ellipsis;
+    	overflow: hidden;
+	}
+}
+
+@media screen and (max-width: 320px) {
+	.detailOrderPanel .row-order-status .col-order-status .order-status-label,
+	.detailOrderPanel .row-order-status .col-order-status {
+	    width: 35px;
+	}
+}
+
+.detailOrderPanel .row-initialized .row-order-time .control-label span{
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+.detailOrderPanel .row-initialized .row-order-actor .control-label span{
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+.detailOrderPanel .row-initialized .row-order-actor .row-order-actor-accepter span.row-order-actor-accepter-value{
+	font-weight: normal;
+	color: #6299e8;
+}
+
+.detailOrderPanel .row-initialized .row-give .row-title-give{
+	font-weight: bold;
+	color: #366144;
+}
+
+.detailOrderPanel .row-initialized .row-get .row-title-get{
+	font-weight: bold;
+	color: #159d21;
+}
+
+.detailOrderPanel .row-initialized .row-rate .row-title-rate{
+	font-weight: bold;
+	color: #fea340;
+}
+
+.detailOrderPanel .row-initialized .row-bank-info .row-bank-info-title{
+	vertical-align: top;
+}
+
+.detailOrderPanel .row-initialized .row-bank-info .row-bank-info-title label{
+	font-weight: bold;
+	color: #2a5bd2;
+}
+
+.detailOrderPanel .row-initialized .row-bank-info .row-bank-info-detail label{
+	display: inline-block;
+	font-weight: bold;
+	color: #1caf9a;
+}
+
+.detailOrderPanel .row-initialized .row-bank-info .row-bank-info-detail span{
+	display: inline-block;
+	font-style: italic;
+	color: #000000;
+}
+
+.detailOrderPanel .row-activities .row-activities-title{
+	font-weight: bold;
+}
+
+.detailOrderPanel .row-activities .activity-time{
+	font-weight: bold;
+}
+
+.detailOrderPanel .row-activities .activity-creator.other-user-action{
+	color: #6299e8;
+}
+
+@media screen and (min-width: 768px) {
+	.detailOrderPanel .row-initialized .row-bank-info .control-label.col-md-3.row-bank-info-title{
+		margin-bottom: 0;
+		vertical-align: top;
+	}
+}
+
+/*Order detail end*/
+.order-item-mobile-label {
+	padding: 0 5px;
+	/* width: 50%; */
+	text-align: left;
+	float: left;
+}
+.order-item-mobile-value {
+	padding: 0 5px;
+	/* width: 50%; */
+	text-align: left;
+	float: right;
+}
+.col-md-8.order-tabs.cs-mobile{
+	padding: 0;
+}
+.cs-mobile {
+	font-size: 13px;
+}
+.col-md-8.order-tabs.cs-mobile .tab-cs-mobile{
+	padding: 10px;	
+}
+.order-label-mobile {
+	font-weight: 600;
+}
+.order-item-mobile {
+	font-size: 12px;
+	text-align: left;
+	padding: 5px 0px;
+	background: white;
+	border-bottom: 1px solid #eee;}
+.sortorder:after {
+  content: '\25b2';
+  font-size: 11px;
+  color: #666666;
+}
+.sortorder.reverse:after {
+  content: '\25bc';
+  font-size: 11px;
+  color: #666666;
+}
+
+#list-order .fa.fa-unsorted ,#list-user .fa.fa-unsorted {
+	color: #999999;
+	margin: 0 2px 0 0;
+}
+#list-order .fa.fa-unsorted, #list-order .fa.fa-sort ,#list-user .fa.fa-unsorted, #list-user .fa.fa-sort {
+	margin: 0 0 0 2px;
+}
+.order-cursor {
+	cursor: pointer;
+}

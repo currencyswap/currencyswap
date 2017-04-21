@@ -21,6 +21,8 @@ var getInfoFormToken = function (token) {
     }
 
     var decodedData = window.atob(arr[1]);
-    return JSON.parse(decodedData);
+    var json = {};
+    try {json = JSON.parse(decodedData);}catch(e){}
+    return json;
 
 };

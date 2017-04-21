@@ -1,0 +1,29 @@
+{
+  "name": "StatusType",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "indexes": {
+    "ORDER_STATUS_ID_UNQ_IDX": {
+      "columns": "name",
+      "kind": "unique"
+    }
+  },
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "length": 128,
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "length": 256
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

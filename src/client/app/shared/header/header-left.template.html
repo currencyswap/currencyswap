@@ -6,8 +6,9 @@
         <a class="menutoggle"><i class="fa fa-bars"></i></a>
 
         <ul class="nav nav-horizontal">
-            <li ng-repeat="item in menuItems" class="{{item.isActivated ? 'active' : ''}}" ><a href="#!{{item.route}}" ><i class="{{item.icon}}"></i> <span>{{item.name}}</span></a></li>
+            <li ng-repeat="item in menuItems" class="{{solidClazName(item)}} {{item.isActivated ? 'active' : ''}}" ><a class="hand-over" data-ng-click="accessMenuItem(item)"><i class="{{item.icon}}"></i> <span>{{item.name}}</span></a></li>
             <li ></li>
         </ul>
     </div><!-- topnav -->
+    <div class="toptitle">{{currentPage.name}}</div>
 </div><!-- header-left -->

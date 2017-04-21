@@ -5,8 +5,8 @@ var errors = require('../libs/errors/errors');
 var util = require('util');
 var constants = require('../libs/constants/constants');
 module.exports = function(Address) {
-    Address.updateAddress = function (addressId, address, callback) {
-        console.log('addressId, ' + addressId);
+    Address.updateAddress = function (userId, address, callback) {
+        console.log('addressId, ' + userId);
         var where = {
             id: addressId
         };
@@ -23,7 +23,6 @@ module.exports = function(Address) {
         };
 
         Address.updateAll(filter, value, function (err, info) {
-            console.log('infoooooooooooooooooo: ', info);
             callback(err,info);
         });
     };

@@ -1,0 +1,69 @@
+<!-- Modal content-->
+<div class="modal-content">
+    <div class="modal-header">
+        <input type="radio" name="bankInfo" ng-model="existedBankInfo" ng-value="true"> Use existed bank information<br/>
+        <input type="radio" name="bankInfo" ng-model="existedBankInfo" ng-value="false"> Use new bank information
+    </div>
+    <div class="modal-body">
+        <div ng-if="existedBankInfo">
+            <form>
+                <div class="form-group">
+                    <select id="bankInfoSelect" ng-model="submittedBankInfoObj.choosenExistedBankInfoId">
+                        <option ng-repeat="bankInfo in bankInfos" value="{{bankInfo.id}}">{{bankInfo.bankAccountName}} - {{bankInfo.bankAccountNumber}}</option>
+                    </select>
+                </div>
+                <div class="modal-footer" style="clear:both;">
+                    <button class="btn btn-primary" ng-disabled="bankInfoForm.$invalid" type="button" data-ng-click="confirmBankInfo()">Confirm</button>
+                    <button class="btn btn-warning" type="button" data-ng-click="cancel()">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div ng-if="!existedBankInfo">
+            <form name="bankInfoForm" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Account Name<span class="asterisk">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="bankAccountName" ng-model="submittedBankInfoObj.bankAccountName" class="form-control" maxlength="128" placeholder="Type your account name..." required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Account Number<span class="asterisk">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="bankAccountNumber" ng-model="submittedBankInfoObj.bankAccountNumber" class="form-control" maxlength="128" placeholder="Type your account number..." required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Bank Name<span class="asterisk">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="bankName" ng-model="submittedBankInfoObj.bankName" class="form-control" maxlength="128" placeholder="Type your bank name..." required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Bank Sort Code<span class="asterisk">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="bankSortCode" ng-model="submittedBankInfoObj.bankSortCode" class="form-control" maxlength="128" placeholder="Type your bank sort code..." required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">SWIFT/IBAN Code<span class="asterisk">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="bankSwiftIbanCode" ng-model="submittedBankInfoObj.bankSwiftIbanCode" class="form-control" maxlength="128" placeholder="Type your bank international Swift Or Iban code..." required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Bank Country<span class="asterisk">*</span></label>
+                    <div class="col-sm-9">
+                        <select id="bankCountrySelect" name="bankCountry" ng-model="submittedBankInfoObj.bankCountry">
+                            <option ng-repeat="country in countries" value="{{country}}">{{country}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer" style="clear:both;">
+                    <button class="btn btn-primary" ng-disabled="bankInfoForm.$invalid" type="button" data-ng-click="confirmBankInfo()">Confirm</button>
+                    <button class="btn btn-warning" type="button" data-ng-click="cancel()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

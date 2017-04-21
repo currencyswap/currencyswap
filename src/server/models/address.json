@@ -7,19 +7,24 @@
   },
   "properties": {
     "address": {
-      "type": "string"
+      "type": "string",
+      "length": 256
     },
     "city": {
-      "type": "string"
+      "type": "string",
+      "length": 128
     },
     "state": {
-      "type": "string"
+      "type": "string",
+      "length": 128
     },
     "country": {
-      "type": "string"
+      "type": "string",
+      "length": 128
     },
     "postcode": {
-      "type": "string"
+      "type": "string",
+      "length": 64
     },
     "memberId": {
       "type": "number",

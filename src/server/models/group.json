@@ -2,19 +2,24 @@
   "name": "Group",
   "base": "PersistedModel",
   "idInjection": true,
+  "indexes": {
+    "GROUP_NAME_UNQ_IDX": {
+      "columns": "name",
+      "kind": "unique"
+    }
+  },
   "options": {
     "validateUpsert": true
   },
   "properties": {
     "name": {
       "type": "string",
-      "required": true,
-      "index": {
-        "unique": true
-      }
+      "length": 128,
+      "required": true
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "length": 256
     },
     "created_on": {
       "type": "date",

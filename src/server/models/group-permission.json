@@ -3,11 +3,9 @@
   "base": "PersistedModel",
   "idInjection": true,
   "indexes": {
-    "groupId_permissionId_index": {
+    "GROUP_PERMISSION_ID_UNQ_IDX": {
       "columns": "groupId, permissionId",
-      "options": {
-        "unique": true
-      }
+      "kind": "unique"
     }
   },
   "options": {
@@ -16,11 +14,13 @@
   "properties": {
     "groupId": {
       "type": "number",
-      "required": true
+      "required": true,
+      "id": true
     },
     "permissionId": {
       "type": "number",
-      "required": true
+      "required": true,
+      "id": true
     }
   },
   "validations": [],

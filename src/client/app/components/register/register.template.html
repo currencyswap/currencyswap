@@ -1,173 +1,210 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<section>
+    <div class="signuppanel" ng-if="startRegister">
+        <div class="row">
 
-<div class="signuppanel" ng-show="startRegister">
-    <div class="row">
+            <div class="col-md-6 col-md-offset-3">
 
-        <!--<div class="col-sm-2"></div>-->
-
-        <div class="col-sm-6 col-sm-offset-3">
-
-            <div class="signin-info">
-                <div class="logopanel">
-                    <h1><span>[</span> Currency Swap <span>]</span></h1>
-                    <!--<h1><span>[</span> {{title}} <span>]</span></h1>-->
-                </div><!-- logopanel -->
-            </div><!-- signin0-info -->
-            <br>
-            <form id="registerFormId" name="registerForm" ng-submit="onSubmit()" novalidate="novalidate">
-                <h2 class="nomargin"><b><u>Register</u></b></h2>
-                <br>
-
-                <div class="form-group" ng-class="{ 'has-error' : (registerForm.username.$invalid && !registerForm.username.$pristine) || userExisted}">
-                    <div class="mb10">
-                        <label class="control-label"><b>Username</b></label> <span class="asterisk">*</span><a data-toggle="popover" data-content="Username only containe a-z (0-9) "><i style="font-size:20px" class="fa" ng-click="showPopover()">&#xf29c;</i></a>
-                        <input ng-change="onUsernameChange()" type="text" name="username" class="form-control" ng-pattern="/^[a-zA-Z0-9\-\.\_]+$/" ng-model="user.username" focus-me="focusUsername" required>
-                        <p ng-show="registerForm.username.$error.pattern" class="help-block ">Username is invalid.</p>
-                        <p ng-show="userExisted" class="help-block ">Your chosen username is already in use</p>
+                <div class="signup-info">
+                    <div class="logopanel">
+                        <h1><span>[</span> Currency Swap <span>]</span></h1>
+                    </div><!-- logopanel -->
+                    <div class="mb20"></div>
+                </div><!-- signin0-info -->
+                <form method="post"id="registerFormId" name="registerForm" ng-submit="onSubmit()" novalidate="novalidate" style="background-color: white">
+                    <h3 class="nomargin">Sign Up</h3>
+                    <p class="mt5 mb20">Already a member? <a href="" ng-click="backToLogin()"><strong>Sign In</strong></a></p>
+                    <div class="form-group" ng-class="{ 'has-error' : (registerForm.username.$invalid && !registerForm.username.$pristine) || userExisted}">
+                        <div class="mb10">
+                            <label class="control-label">Username</label> <span class="asterisk">*</span><a data-toggle="popover" data-trigger="hover" data-content="Username only containe [a-z], [0-9], '-', '_', '.'"><i style="font-size:15px; color: #4d4e4e" class="fa fa-question-circle" ng-click="showPopover()"></i></a>
+                            <input ng-change="onUsernameChange()" type="text" name="username" class="form-control" ng-pattern="/^[a-zA-Z0-9\-\.\_]+$/" ng-model="user.username" focus-me="focusUsername" placeholder="User name" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.USERNAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.USERNAME_MAX}}" required>
+                            <label class="error" ng-show="!registerForm.username.$error.minlength && registerForm.username.$error.pattern" >Username is invalid.</label>
+                            <label class="error" ng-show="userExisted" >Your chosen username is already in use.</label>
+                            <label class="error" ng-show="registerForm.username.$error.required && registerForm.username.$dirty" >This field is required.</label>
+                            <label class="error" ng-show="registerForm.username.$error.minlength" >Username is too short.</label>
+                            <label class="error" ng-show="fieldError === serverErrors.USERNAME_EXCEED_MAX_LENGTH
+                                                          || fieldError === serverErrors.USERNAME_IS_NOT_STRING" >{{messageErrorValidate}}</label>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group"
-                     ng-class="{ 'has-error' : registerForm.fullName.$invalid && !registerForm.fullName.$pristine }">
-                    <div class="mb10">
-                        <label class="control-label"><b>Full name</b></label>
-                        <input type="text" name="fullName" class="form-control" ng-model="user.fullName" ng-minlength="3" ng-maxlength="45">
-                        <p ng-show="registerForm.fullName.$error.minlength" class="help-block">Fullname is too short.</p>
-                        <p ng-show="registerForm.fullName.$error.maxlength" class="help-block">Fullname is too long.</p>
+                    <div class="form-group"
+                         ng-class="{ 'has-error' : (registerForm.email.$invalid && !registerForm.email.$pristine) || emailExisted}">
+                        <div class="mb10">
+                            <label class="control-label">Email</label> <span class="asterisk">*</span><a data-toggle="popover" data-trigger="hover" data-content="Important: Email must be valid"><i style="font-size:15px; color: #4d4e4e" class="fa fa-question-circle" ng-click="showPopover()"></i></a>
+                            <input ng-change="onEmailChange()" ng-readonly="user.inviteeEmail" type="email" name="email" class="form-control" ng-model="user.email" focus-me="focusEmail" placeholder="Email" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.EMAIL_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.EMAIL_MAX}}" required>
+                            <label class="error" ng-show="emailExisted" >Your email is already in use.</label>
+                            <label class="error" ng-show="!registerForm.email.$error.minlength && !registerForm.email.$error.required && registerForm.email.$invalid && !registerForm.email.$pristine">Email is not valid.</label>
+                            <label class="error" ng-show="registerForm.email.$error.required && registerForm.email.$dirty" >This field is required.</label>
+                            <label class="error" ng-show="registerForm.email.$error.minlength" >Email is too short.</label>
+                            <label class="error" ng-show="fieldError === serverErrors.EMAIL_IS_NOT_STRING
+                                                          || fieldError === serverErrors.EMAIL_IS_INVALID || fieldError === serverErrors.EMAIL_EXCEED_MAX_LENGTH" >{{messageErrorValidate}}</label>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group"
-                     ng-class="{ 'has-error' : (registerForm.email.$invalid && !registerForm.email.$pristine) || emailExisted}">
-                    <div class="mb10">
-                        <label class="control-label"><b>Email</b></label> <span class="asterisk">*</span><a data-toggle="popover" data-content="Important: Email must be valid"><i style="font-size:20px" class="fa" ng-click="showPopover()">&#xf29c;</i></a>
-                        <input ng-change="onEmailChange()" type="email" name="email" class="form-control" ng-model="user.email" focus-me="focusEmail" required>
-                        <p ng-show="registerForm.email.$invalid && !registerForm.email.$pristine" class="help-block">Email is not valid.</p>
-                        <p ng-show="emailExisted" class="help-block">Your email is already in use</p>
+                    <div class="form-group" ng-class="{'has-error' : registerForm.password.$invalid && !registerForm.password.$pristine}">
+                        <label class="control-label">Password</label> <span class="asterisk">*</span><a data-toggle="popover" data-trigger="hover" data-content="Password at least 8 characters"><i style="font-size:15px; color: #4d4e4e" class="fa fa-question-circle" ng-click="showPopover()"></i></a>
+                        <input class="form-control" ng-change="inputChanging()" type="password" name="password" required data-ng-model="user.password" ng-minlength="8" placeholder="Enter your password"  minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PWD_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PWD_MAX}}" >
+                        <label class="error" ng-show="registerForm.password.$error.minlength" >Password is too short.</label>
+                        <label class="error" ng-show="registerForm.password.$error.required && registerForm.password.$dirty" >This field is required.</label>
+                        <label class="error" ng-show="fieldError === serverErrors.PASSWORD_EXCEED_MAX_LENGTH
+                                                          || fieldError === serverErrors.REQUEST_NO_PASSWORD|| fieldError === serverErrors.PASSWORD_IS_NOT_STRING" >{{messageErrorValidate}}</label>
                     </div>
-                </div>
-
-                <div class="mb10">
-                    <label class="control-label"><b>Profession</b></label>
-                    <input class="form-control" type="text" ng-model="user.profession">
-                </div>
-
-                <div class="form-group"
-                     ng-class="{ 'has-error' : registerForm.cellphone.$invalid && !registerForm.cellphone.$pristine }">
-                    <div class="mb10">
-                        <label class="control-label"><b>Cell phone</b></label>
-                        <input type="text" name="cellphone" class="form-control" ng-model="user.cellphone" focus-me="focusCellphone">
-                        <p ng-show="registerForm.cellphone.$invalid && !registerForm.cellphone.$pristine"
-                           class="help-block">Phone number is not valid.</p>
+                    <div class="form-group" ng-class="{'has-error' : registerForm.passwordCompare.$invalid && !registerForm.passwordCompare.$pristine}">
+                        <label class="control-label">Re-type Password</label> <span class="asterisk">*</span>
+                        <input class="form-control" type="password" name="passwordCompare" required data-ng-model="user.passwordCompare" data-ng-match="user.password" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PWD_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PWD_MAX}}" placeholder = "Re-enter your password"/>
+                        <label class="error" data-ng-show="!registerForm.passwordCompare.$error.required && registerForm.passwordCompare.$error.match">Password does not match.</label>
+                        <label class="error" ng-show="registerForm.passwordCompare.$error.required && registerForm.passwordCompare.$dirty" >This field is required.</label>
                     </div>
-                </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error' : registerForm.fullName.$invalid && !registerForm.fullName.$pristine }">
+                        <div class="mb10">
+                            <label class="control-label">Full name</label>
+                            <input  ng-change="inputChanging()" type="text" name="fullName" class="form-control" ng-model="user.fullName" ng-minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.FULLNAME_MIN}}" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.FULLNAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.FULLNAME_MAX}}" placeholder = "Full name">
+                            <label class="error" ng-show="registerForm.fullName.$error.minlength">Fullname is too short.</label>
+                            <label class="error" ng-show="registerForm.fullName.$error.maxlength">Fullname is too long.</label>
+                            <label class="error" ng-show="fieldError === serverErrors.FULLNAME_IS_NOT_STRING
+                                                          || fieldError === serverErrors.FULLNAME_EXCEED_MAX_LENGTH" >{{messageErrorValidate}}</label>
+                        </div>
+                    </div>
+                    <div class="mb10">
+                        <label class="control-label">Profession</label>
+                        <input class="form-control" ng-change="inputChanging()" type="text" ng-model="user.profession" placeholder="Your profession here" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PROFESSION_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PROFESSION_MAX}}">
+                        <label class="error" ng-show="fieldError === serverErrors.PROFESSION_EXCEED_MAX_LENGTH" >{{messageErrorValidate}}</label>
+                    </div>
 
-                <div class="form-group" data-ng-class="{'has-error' : registerForm.password.$invalid && !registerForm.password.$pristine}">
-                    <label for="password"><b>Password</b></label> <span class="asterisk">*</span><a data-toggle="popover" data-content="Password at least 8 characters"><i style="font-size:20px" class="fa" ng-click="showPopover()">&#xf29c;</i></a>
-                    <input class="form-control" type="password" name="password" required data-ng-model="user.password" ng-minlength="8">
-                    <p ng-show="registerForm.password.$error.minlength" class="help-block">Username is too short.</p>
-                </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error' : cellphoneExisted}">
+                        <div class="mb10">
+                            <label class="control-label">Cellphone</label>
+                            <input ng-change="inputChanging()" type="text" class="form-control" ng-model="user.cellphone" focus-me="focusCellphone" placeholder="Your cellphone here" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.CELLPHONE_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.CELLPHONE_MAX}}">
+                            <label class="error" ng-show="cellphoneExisted">Your cellphone number is already in use.</label>
+                            <label class="error" ng-show="fieldError === serverErrors.CELLPHONE_EXCEED_MAX_LENGTH" >{{messageErrorValidate}}</label>
+                        </div>
+                    </div>
 
-                <div class="form-group" data-ng-class="{'has-error' : registerForm.passwordCompare.$invalid && !registerForm.passwordCompare.$pristine}">
-                    <label for="passwordCompare"><b>Re-type Password</b></label> <span class="asterisk">*</span>
-                    <input class="form-control" type="password" name="passwordCompare" required data-ng-model="user.passwordCompare" data-ng-match="user.password"/>
-                    <span class="help-block" data-ng-show="registerForm.passwordCompare.$error.match">Passwords do not match.</span>
-                </div>
+                    <label class="control-label">Birthday</label>
 
-                <label class="control-label"><b>Birthday</b></label>
-
-                <div class="form-group">
-                    <!--<div class="col-sm-5">-->
+                    <div class="form-group">
                         <div class="input-group">
-                            <input type="text" id="dob" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="birthday"
-                                   is-open="calendar.opened" datepicker-options="dateOptions" ng-required="true"
-                                   close-text="Close" alt-input-formats="altInputFormats"/>
+                             <input type="text" id="dob" class="form-control" uib-datepicker-popup="{{format}}" ng-model="user.birthday"
+                                   is-open="calendar.opened" datepicker-options="dateOptions"
+                                   close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false"/>
                                 <span class="input-group-addon" style="height: 40px">
                                    <i class="glyphicon glyphicon-calendar" ng-click="openCalendar()"></i></button>
                                 </span>
-
                         </div>
+                    </div>
 
-                    <!--</div>-->
-                </div>
 
-                <div class="mb10">
-                    <label class="control-label"><b>Address</b></label>
-                    <input class="form-control" type="text" ng-model="user.address">
-                </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error' : nationalIdExisted}">
+                        <div class="mb10">
+                            <label class="control-label">Passport/National ID</label>
+                            <input ng-change="inputChanging()" type="text" class="form-control" ng-model="user.nationalId" focus-me="focusNationalId" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PP_NATIONAL_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PP_NATIONAL_MAX}}" placeholder = "Your passport/national id here">
+                            <label class="error" ng-show="nationalIdExisted">Your National Id is already in use.</label>
+                        </div>
+                    </div>
 
-                <div class="mb10">
-                    <label class="control-label"><b>City</b></label>
-                    <input class="form-control" type="text" ng-model="user.city">
-                </div>
+                    <div class="mb10">
+                        <label class="control-label">Address</label>
+                        <input class="form-control" type="text" ng-model="user.address" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ADDRESS_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ADDRESS_MAX}}" placeholder = "Your address here">
+                    </div>
 
-                <div class="mb10">
-                    <label class="control-label"><b>Post Code</b></label>
-                    <input class="form-control" type="text" ng-model="user.postcode">
-                </div>
+                    <div class="mb10">
+                        <label class="control-label">City</label>
+                        <input class="form-control" type="text" ng-model="user.city" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.CITY_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.CITY_MAX}}" placeholder = "Your city here">
+                    </div>
 
-                <div class="mb10">
-                    <country-state-select country="user.country" state="user.state"></country-state-select>
-                </div>
+                    <div class="mb10">
+                        <country-state-select country="user.country" state="user.state"></country-state-select>
+                    </div>
+                    <div class="mb10">
+                        <label class="control-label">Post Code</label>
+                        <input ng-change="inputChanging()" class="form-control" type="text" ng-model="user.postcode" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.POSTCODE_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.POSTCODE_MAX}}" placeholder = "Your post code here">
+                    </div>
+                    <div class="mb30"></div>
+                    <hr>
+                    <div class="mb30"></div>
+                    <h4 class="nomargin">Bank Account</h4>
+                    <div class="mb10">
+                        <label class="control-label">Account Name</label>
+                        <input class="form-control" type="text" ng-model="user.bankAccountName" placeholder="Your bank account name here" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ACC_NAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ACC_NAME_MAX}}">
+                    </div>
 
-                <br>
-                <button type="submit" class="btn btn-success btn-block" ng-disabled="registerForm.$invalid">REGISTER</button>
-                <div class="loaders" align="center" ng-show="gifLoading">
-                    <img src="../../../assets/images/loaders/loader1.gif" alt="">
-                </div>
-            </form>
-        </div><!-- col-sm-6 -->
+                    <div class="mb10">
+                        <label class="control-label">Account Number</label>
+                        <input class="form-control" type="text" ng-model="user.bankAccountNumber" placeholder="Your bank account number here" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ACC_NUM_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ACC_NUM_MAX}}">
+                    </div>
 
-        <!--<div class="col-sm-2"></div>-->
+                    <div class="mb10">
+                        <label class="control-label">Bank Name</label>
+                        <input class="form-control" type="text" ng-model="user.bankName" placeholder="Your bank name here" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MAX}}">
+                    </div>
 
-    </div><!-- row -->
+                    <div class="mb10">
+                        <label class="control-label">Bank Sort Code</label>
+                        <input class="form-control" type="text" ng-model="user.sortCode" placeholder="Your bank sort code here" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MAX}}">
+                    </div>
 
-    <div class="signup-footer">
-        <div class="pull-left">
-            &copy; 2014. All Rights Reserved.
-        </div>
-        <div class="pull-right">
-            Currency Swap
-        </div>
+                    <div class="mb10">
+                        <label class="control-label">Bank International SWIFT Or IBAN Code</label>
+                        <input class="form-control" type="text" ng-model="user.swiftIbanCode" placeholder="Your bank international SWIFT or IBAN sort code here" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MAX}}">
+                    </div>
+
+                    <div class="mb10">
+                        <country-bank-register country="user.bankCountry"></country-bank-register>
+                    </div>
+
+                    <br>
+                    <button type="submit" class="btn btn-success btn-block" ng-disabled="registerForm.$invalid || gifLoading">SIGN UP</button>
+                    <div class="loaders" align="center" ng-show="gifLoading">
+                        <img src="../../../assets/images/loaders/loader1.gif" alt="">
+                    </div>
+                </form>
+            </div><!-- col-sm-6 -->
+
+            <!--<div class="col-sm-2"></div>-->
+
+        </div><!-- row -->
+
+        <footer></footer>
+
     </div>
+</section>
 
-</div>
 
-<div ng-show="registerSuccess">
+<div ng-if="registerSuccess">
     <div class="col-md-3">
-
     </div>
     <div class="col-md-6">
+        <br>
         <div class="panel panel-success">
             <div class="panel-heading">
                 <div class="panel-btns">
                 </div><!-- panel-btns -->
-                <h3 class="panel-title">Register Successfully</h3>
+                <h3 class="panel-title">Sign Up Successfully</h3>
             </div>
             <div class="panel-body">
-                We sent an active link to your email, please help to check and follow the instruction in that email.
-                Please help to active your account within 24 hours.
+                The confirmation link has been sent to your email address <b>{{user.email}}</b><br>
+                Please, check your email and click the link inside in order to finish registration and start working with Currency Swap.<br>
+                <i>The confirmation link will be valid for a duration of 24 hours</i>
+                <br>
+                <br>
+                <div align="center"><a ng-click="backToLogin()" href="">BACK TO SIGN IN PAGE</a></div>
             </div>
         </div>
 
-
-        <div class="signup-footer">
-            <div class="pull-left">
-                &copy; 2014. All Rights Reserved.
-            </div>
-            <div class="pull-right">
-                Currency Swap
-            </div>
-        </div>
+        <footer></footer>
     </div>
     <div class="col-md-3">
 
     </div>
 </div>
 
-<div ng-show="activeSuccess">
+<div ng-if="activeSuccess">
     <div class="col-md-3">
 
     </div>
     <div class="col-md-6">
+        <br>
         <div class="panel panel-success">
             <div class="panel-heading">
                 <div class="panel-btns">
@@ -175,19 +212,13 @@
                 <h3 class="panel-title">Activation successfully</h3>
             </div>
             <div class="panel-body">
-                Thank you for your activation. Please wait for admin's approval. After 3 days, if You can not login to Currency Swap system, please help to contact <b>admin@gmail.com</b> for supports.
+                Your activation process has been done. Please wait for admin's approval. After 3 days, if You can not login to Currency Swap system, please help to contact <b>admin@gmail.com</b> for supports.
+                <br>
+                <div align="center"><a ng-click="backToLogin()" href="">BACK TO SIGN IN PAGE</a></div>
             </div>
         </div>
 
-
-        <div class="signup-footer">
-            <div class="pull-left">
-                &copy; 2014. All Rights Reserved.
-            </div>
-            <div class="pull-right">
-                Currency Swap
-            </div>
-        </div>
+        <footer></footer>
     </div>
     <div class="col-md-3">
 

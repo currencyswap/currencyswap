@@ -1,0 +1,8 @@
+{
+  "CSwapDB": {
+    "name": "CSwapDB",
+    "connector": "memory",
+    "localStorage": "db",
+    "file": "./logs/db.log"
+  }
+}

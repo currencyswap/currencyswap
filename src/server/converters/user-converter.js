@@ -4,6 +4,8 @@ var exports = module.exports;
 var appConfig = require('../libs/app-config');
 var dateFormat = require('dateformat');
 var constant = require('../libs/constants/constants');
+var errorUtils = require('../libs/errors/error-util');
+var errors = require('../libs/errors/errors');
 
 exports.convertUserToUserJSON = function (user) {
 
@@ -63,35 +65,69 @@ exports.convertUserData = function (requestUser) {
     resultUser.addresses = [];
 
     //Default for new registration user
-    //resultUser.group = "Blocked User";
-    resultUser.group = "Blocked User";
+    resultUser.group = constant.USER_GROUPS.BLOCKED_USER_GR;
     resultUser.status = constant.USER_STATUSES.NEW;
+
     resultUser.expiredDate = new Date(Date.now()).toISOString();
     resultUser.registeredDate = new Date(Date.now()).toISOString();
 
-    if (requestUser.fullName) {
-        resultUser.fullName = requestUser.fullName;
-    }
+    resultUser.banksInfo = [];
 
-    if (requestUser.birthday) {
-        resultUser.birthday = requestUser.birthday;
-    }
+    if (requestUser.fullName) resultUser.fullName = requestUser.fullName;
 
-    if (requestUser.cellphone) {
-        resultUser.cellphone = requestUser.cellphone;
-    }
+    if (requestUser.birthday) resultUser.birthday = new Date(requestUser.birthday).toISOString();
 
-    if (requestUser.profession) {
-        resultUser.profession = requestUser.profession;
-    }
-
-    if (requestUser.addresses) {
-        requestUser.addresses.forEach(function (address) {
-            if (address.address && address.city && address.postcode && address.country) resultUser.addresses.push(requestUser.addresses);
-        });
-    }
+    if (requestUser.cellphone) resultUser.cellphone = requestUser.cellphone;
 
     if (requestUser.profession) resultUser.profession = requestUser.profession;
 
+    if (requestUser.nationalId) resultUser.nationalId = requestUser.nationalId;
+
+    if (requestUser.addresses) resultUser.addresses = requestUser.addresses;
+
+    if (requestUser.profession) resultUser.profession = requestUser.profession;
+
+    if (requestUser.bankAccountName
+        || requestUser.bankAccountNumber
+        || requestUser.bankName
+        || requestUser.bankCountry
+			  || requestUser.bankSortCode
+			  || requestUser.bankSwiftIbanCode) {
+        resultUser.banksInfo.push({
+            bankAccountName: requestUser.bankAccountName,
+            bankAccountNumber: requestUser.bankAccountNumber,
+            bankName: requestUser.bankName,
+            bankCountry: requestUser.bankCountry,
+					  bankSortCode: requestUser.bankSortCode,
+					  bankSwiftIbanCode: requestUser.bankSwiftIbanCode
+        })
+    }
+
+    /*if (requestUser.bankAccountNumber) resultUser.bankInfo.bankAccountNumber = requestUser.bankAccountNumber;
+
+    if (requestUser.bankName) resultUser.bankInfo.bankName = requestUser.bankName;
+
+    if (requestUser.bankCountry) resultUser.bankInfo.bankCountry = requestUser.bankCountry;*/
+
+    if (requestUser.inviter) resultUser.inviter = requestUser.inviter;
+
     return resultUser;
+};
+
+exports.convertExRateValueToNumber = function (exRateObj) {
+    try {
+        exRateObj.usDollarBuy = parseInt(exRateObj.usDollarBuy);
+        exRateObj.usDollarSell = parseInt(exRateObj.usDollarSell);
+        exRateObj.poundBuy = parseInt(exRateObj.poundBuy);
+        exRateObj.poundSell = parseInt(exRateObj.poundSell);
+        exRateObj.euroBuy = parseInt(exRateObj.euroBuy);
+        exRateObj.euroSell = parseInt(exRateObj.euroSell);
+    } catch (err) {
+        throw errorUtils.createAppError(errors.INVALID_INPUT_DATA);
+    }
+};
+
+exports.changeCreatedDateToNow = function (exRateObj) {
+    exRateObj.createdDate = new Date(Date.now());
+    return exRateObj;
 };

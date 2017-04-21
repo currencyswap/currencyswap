@@ -1,23 +1,43 @@
 <div class="header-right">
     <ul class="headermenu">
-        <li ng-repeat="item in toolbarItems">
-            <div class="btn-group">
-                <a href="#!{{item.route}}" ng-if="!item.isMyProfile && !item.isLogout">
+        <li data-ng-repeat="item in toolbarItems" class="{{solidClazName(item)}}">
+            <div class="btn-group" data-ng-if="item.name == 'Notification'">
+              <button data-toggle="dropdown" class="btn btn-default hand-over dropdown-toggle tp-icon {{item.isActivated ? 'tb-active' : ''}}" title="{{item.name}}" data-placement="bottom">
+                <i class="{{item.icon}}"></i>
+                <span class="badge" data-ng-if="item.badge > 0">{{item.badge}}</span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-head pull-right">
+                <h5 class="title">Newly messages</h5>
+                <ul class="dropdown-list user-list msg-menu">
+                  <li class="{{msg.reads.length === 0 ? 'msg-new mgs-bgnew': ''}}" data-ng-repeat="msg in item.messages | limitTo: 5">
+                    <a href="javascript:void(0)" class="msg-item msg-quick" data-ng-click="readMessage(msg)">
+                        {{msg.title}}<span ng-if="item.title.indexOf(constant.MSG.NAIRA_EX_RATE_TITLE) > -1"> - {{msg.message}}</span>
+                    </a>
+                  </li>
+                  <li data-ng-if="!item.messages || item.messages.length === 0">
+                    You have no message at this time!
+                  </li>
+                  <li class="msg-new"><a href="#!{{item.route}}">See All Messages</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="btn-group" data-ng-if="item.name != 'Notification'">
+                <a class="hand-over" data-ng-click="accessMenuItem(item)" data-ng-if="!item.isMyProfile && !item.isLogout && item.name != 'Notification'">
                     <button class="btn btn-default tp-icon {{item.isActivated ? 'tb-active' : ''}}" data-toggle="tooltip" data-placement="bottom" title="{{item.name}}">
                         <i class="{{item.icon}}"></i>
                     </button>
                 </a>
                 <!-- My Profile -->
-                <a href="#!{{item.route}}" ng-if="item.isMyProfile">
-                    <button ng-click="onMyProfile()" type="button" class="btn btn-default dropdown-toggle {{item.isActivated ? 'tb-active' : ''}}" data-toggle="dropdown" data-placement="bottom" title="{{item.name}}">
-                        <img ng-src="{{currUser.avatarUrl}}" alt=""/>
-                        {{currUser.fullName}}
+                <a class="hand-over" data-ng-click="accessMenuItem(item)" data-ng-if="item.isMyProfile">
+                    <button type="button" class="btn btn-default dropdown-toggle {{item.isActivated ? 'tb-active' : ''}}" data-toggle="dropdown" data-placement="bottom" title="{{item.name}}">
+                        <img data-ng-src="{{user.avatarUrl}}?{{randomNumImg}}" alt=""/>
+                        <span class="toolbar-my-profile-name">{{user.fullName}}</span>
                     </button>
                 </a>
                 <!-- My Logout -->
-                <a href="" ng-if="item.isLogout">
+                <a class="hand-over" data-ng-if="item.isLogout">
                     <button class="btn btn-default dropdown-toggle tp-icon {{item.isActivated ? 'tb-active' : ''}}"
-                            ng-click="onLogout();" data-placement="bottom" title="{{item.name}}">
+                            data-ng-click="onLogout();" data-placement="bottom" title="{{item.name}}">
                         <i class="{{item.icon}}"></i>
                     </button>
                 </a>

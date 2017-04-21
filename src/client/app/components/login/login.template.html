@@ -1,24 +1,24 @@
 
 <div class="signinpanel">
     <div class="row">
-        <div class="col-sm-4 col-sm-offset-4">
+        <div class="col-sm-6 col-sm-offset-3">
             <div class="signin-info">
                 <div class="logopanel">
                     <h1><span>[</span> {{title}} <span>]</span></h1>
                 </div><!-- logopanel -->
-                <strong>Not a member? <a href="" ng-click="onRegister()">Register</a></strong>
+                <strong>New member? <a href="" ng-click="onRegister()">Sign Up</a></strong>
             </div><!-- signin0-info -->
         </div>
      </div>
     <div class="row">
-        <div class="col-sm-4 col-sm-offset-4">
-            <form>
+        <div class="col-sm-6 col-sm-offset-3">
+            <form style="background-color: white">
                 <label class="error" ng-model="loginErrMsg">{{loginErrMsg}}</label>
                 <label class="error" ng-if="isExpired">Your acount is expired date. Please contact with admin: currencyswap@gmail.com</label>
                 <h4 class="nomargin">Sign In</h4>
-                <p class="mt5 mb20">Login to access your account.</p>
-                <input type="text" class="form-control uname" placeholder="Username" ng-model="user.username"/>
-                <input type="password" class="form-control pword" placeholder="Password" ng-model="user.password"/>
+                <p class="mt5 mb20">Sign in to access your account.</p>
+                <input ng-change="onUsernameChange()" type="text" class="form-control uname" placeholder="Username" ng-model="user.username"/>
+                <input ng-change="onPasswordChange()" type="password" class="form-control pword" placeholder="Password" ng-model="user.password"/>
                 <a href="" ng-click="onForgotPassword()">
                     <small>Forgot Your Password?</small>
                 </a>

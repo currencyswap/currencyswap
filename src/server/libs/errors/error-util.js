@@ -9,6 +9,7 @@ exports.getMessage = function (errorMessageLabel) {
 };
 
 exports.createAppError = function (error) {
+    error = error||{'message': 'Unknown', 'code': 0}; 
     let message = stringUtil.getMessage(error.message);
     return new AppError(message, error.code);
 };

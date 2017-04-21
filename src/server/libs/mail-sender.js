@@ -78,7 +78,6 @@ exports.sendMail = function (mailOptions, callback) {
             return callback(err);
         }
 
-        console.info('INFO : %s', JSON.stringify(info));
         callback(null, info);
     });
 };

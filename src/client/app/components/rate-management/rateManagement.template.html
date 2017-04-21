@@ -1,0 +1,80 @@
+<div class="rate-management-content">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5>Naira exchanges rate</h5>
+
+            <div class="panel-body panel-body-nopadding">
+                <div>
+                    <div class="table-responsive tableExRate">
+                        <table class="table table-success mb30">
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Buy</th>
+                                <th scope="col" >Median</th>
+                                <th scope="col">Sell</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>US Dollar</td>
+                                <td>
+                                    <input class="inputRate" ng-change="changeDollarBuy(todayRates.usDollarBuy)" type="number" ng-model="todayRates.usDollarBuy">
+                                </td>
+                                <td>
+                                    <input class="inputRate medianRate" type="number" ng-model="todayRates.usDollarMedian" readonly>
+                                    <label class="mideUsRateChange" style="color: {{mideUsRateChange >= 0 ? 'blue' : 'red'}}">{{mideUsRateChange}}</label>
+                                </td>
+                                <td>
+                                    <input class="inputRate" ng-change="changeDollarSell(todayRates.usDollarSell)" type="number" ng-model="todayRates.usDollarSell">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pound</td>
+                                <td>
+                                    <input class="inputRate" ng-change="changePoundBuy(todayRates.poundBuy)" type="number" ng-model="todayRates.poundBuy">
+                                </td>
+                                <td>
+                                    <input class="inputRate medianRate" type="number" ng-model="todayRates.poundMedian" readonly>
+                                    <label class="mideUsRateChange" style="color: {{midePoRateChange >= 0 ? 'blue' : 'red'}}">{{midePoRateChange}}</label>
+                                </td>
+                                <td>
+                                    <input class="inputRate" ng-change="changePoundSell(todayRates.poundSell)" type="number" ng-model="todayRates.poundSell">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Euro</td>
+                                <td>
+                                    <input class="inputRate" ng-change="changeEuroBuy(todayRates.euroBuy)" type="number" ng-model="todayRates.euroBuy">
+                                </td>
+                                <td>
+                                    <input class="inputRate medianRate" type="number" ng-model="todayRates.euroMedian" readonly>
+                                    <label class="mideUsRateChange" style="color: {{mideEuRateChange >= 0 ? 'blue' : 'red'}}">{{mideEuRateChange}}</label>
+                                </td>
+                                <td>
+                                    <input class="inputRate" ng-change="changeEuroSell(todayRates.euroSell)" type="number" ng-model="todayRates.euroSell">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- table-responsive -->
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-sm btn-danger" ng-click="undo()">Undo</button>
+                        <!--<button class="btn btn-sm btn-primary" ng-click="save()">Get rates</button>-->
+                        <button ng-disabled="gifLoading" class="btn btn-sm btn-primary" ng-click="saveAndSendRateToUsers(todayRates)">Send to users
+                        </button>
+                        <div class="loaders" align="center" ng-show="gifLoading">
+                            <img src="../../../assets/images/loaders/loader1.gif" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div><!-- panel-footer -->
+        </div>
+    </div>
+</div>

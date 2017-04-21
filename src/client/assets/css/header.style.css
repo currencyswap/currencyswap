@@ -3,3 +3,95 @@ button.tb-active {
     color: #1CAF9A !important;
     background: none;
 }
+
+.user-content {
+    text-align: center;
+    margin: 10px auto !important;
+}
+.user-content .user-tabs {
+    float: none;
+    margin: auto;
+    width: 100%;
+}
+
+.user-content .user-status-0 {
+    color: #159d21;
+}
+
+.user-content .user-status-1{
+    color: #fea340;
+}
+.user-content .user-status-2{
+    color: #9d000e;
+}
+.user-content  .user-item-header {
+    background: #cccccc;
+}
+.support-content, .help-content, .notification-content, .createOrderPanel, .user-content, .detailOrderPanel, .rate-management-content{
+  margin: 10px auto;
+}
+.support-content, .createOrderPanel {
+  max-width: 800px;
+}
+.support-content textarea {
+ min-height: 200px;
+}
+.msg-row {
+  border-bottom: 1px solid #D3D3D3;
+  margin-bottom: 6px;
+}
+.msg-time {
+ font-size: 12px;
+}
+.msg-user {
+ font-weight:bold;
+}
+.msg-issue {
+ text-align: right;
+}
+.msg-menu {
+}
+.msg-item {
+}
+.msg-new {
+ font-size: +1pt;
+ font-weight: bold;
+ padding-left:6px;
+ padding-right:6px;
+}
+.mgs-bgnew {
+ background-color: #E8FDFD !important;
+}
+.msg-quick {
+ display:block; 
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+}
+.hand-over {
+cursor: pointer;
+}
+/* body {border:1px solid red !important;} */
+@media screen and (max-width: 1024px) {
+	/* body {border:1px solid green !important;} */
+}
+
+@media screen and (max-width: 767px) {
+	/* body {border:1px solid blue !important;} */
+}
+
+@media screen and (max-width: 640px) {
+/* body {border:1px solid yellow !important;} */
+}
+
+@media screen and (max-width: 480px) {
+/* body {border:1px solid black !important;} */
+}
+
+@media screen and (max-width: 360px) {
+/* body {border:1px solid orange !important;} */
+}
+
+@media screen and (max-width: 320px) {
+/* body {border:1px solid cyan !important;} */
+}

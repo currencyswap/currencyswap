@@ -1,6 +1,6 @@
 'use strict';
 
-const appConfig = require('../../app-config');
+const config = require('../global-config');
 const error = require('./errors/errors');
 
 var AppError = require('./errors/app-error');
@@ -13,8 +13,20 @@ exports.DATETIME_FORMAT = 'yyyy-mm-dd HH:MM:ss';
 exports.DATETIME_MS_FORMAT = 'yyyy-mm-ss HH:MM:ss L';
 exports.TIME_FORMAT = 'HH:MM:ss';
 
+const SLASH_CHAR = '/';
+
+var DEFAULT_REDIS_CONF = {
+        host: 'localhost',
+        port: 6379,
+        db: 0,
+        pass: '',
+        ttl: 3600,
+        disableTTL: false,
+        prefix: 'appsess:'
+    };
+
 exports.getDateFormat = function () {
-    let dateFormat = appConfig.dateFormat;
+    let dateFormat = config.dateFormat;
 
     if (dateFormat) return dateFormat;
 
@@ -26,117 +38,98 @@ exports.getDateFormat = function () {
 }
     ;
 exports.getTitle = function () {
-    return appConfig.title ? appConfig.title : '';
+    return config.title || '';
+};
+
+exports.getFooter = function () {
+    return config.footer || '';
+};
+
+exports.getSuperUsername = function () {
+    return config.superUsername || 'admin';
 };
 
 exports.getRedis = function () {
-    var redisParams = {
-        host: 'localhost',
-        port: 6379,
-        db: 10,
-        pass: '',
-        ttl: 3600,
-        disableTTL: false,
-        prefix: 'nodejs-app:'
-    };
-
-    if (appConfig.redis === undefined) {
+    if (config.redis === undefined) {
         let message = errorUtil.getMessage(error.INVALID_REDIS_PARAMS.message);
         throw new AppError(message, error.INVALID_REDIS_PARAMS.code);
     }
 
-    if (appConfig.redis.host !== undefined &&
-        appConfig.redis.host !== null &&
-        appConfig.redis.host.length > 0) {
-        redisParams.host = appConfig.redis.host;
+    var conf = Object.assign({}, DEFAULT_REDIS_CONF, config.redis);
+    if (config.debug) {
+        console.log('REDIS configuration info:', JSON.stringify(conf));
     }
-
-    if (appConfig.redis.port !== undefined &&
-        appConfig.redis.port !== null) {
-        redisParams.port = appConfig.redis.port;
-    }
-
-    if (appConfig.redis.db !== undefined &&
-        appConfig.redis.db !== null) {
-        redisParams.db = appConfig.redis.db;
-    }
-
-    if (appConfig.redis.pass !== undefined &&
-        appConfig.redis.pass !== null &&
-        appConfig.redis.pass.length > 0) {
-        redisParams.pass = appConfig.redis.pass;
-    }
-
-    if (appConfig.redis.ttl !== undefined &&
-        appConfig.redis.ttl !== null) {
-        redisParams.ttl = appConfig.redis.ttl;
-    }
-
-    if (appConfig.redis.disableTTL !== undefined &&
-        appConfig.redis.disableTTL !== null) {
-        redisParams.disableTTL = appConfig.redis.disableTTL;
-    }
-
-    if (appConfig.redis.prefix !== undefined &&
-        appConfig.redis.prefix !== null &&
-        appConfig.redis.prefix.length > 0) {
-        redisParams.prefix = appConfig.redis.prefix;
-    }
-
-    return redisParams;
+    return conf;
 };
 
 exports.getTokenExpired = function () {
-    return appConfig.tokenExpired;
+    return config.tokenExpired;
 };
 
 exports.getLogsFolder = function () {
-    return appConfig.logs;
+    return config.logs;
 };
+
+
+exports.getMediaFolder = function () {
+
+    if ( config.mediaFolder.slice(-1) != SLASH_CHAR) {
+        return config.mediaFolder + SLASH_CHAR;
+    } 
+    return config.mediaFolder;
+};
+
+exports.getPaymentEvidenceFolder = function () {
+    if (config.paymentEvidence.slice(-1) != SLASH_CHAR) {
+        return config.paymentEvidence + SLASH_CHAR;
+    }
+    return config.paymentEvidence;
+};
+
 
 exports.getSMTPOptions = function () {
 
-    if (!appConfig.smtp || (!appConfig.smtp.host && !appConfig.smtp.service)) {
+    if (!config.smtp || !(config.smtp.host || config.smtp.service)) {
         return null;
     }
 
-    let options = {};
+    var options = {};
 
-    if ( appConfig.smtp.host ) options.host = appConfig.smtp.host;
-    if ( appConfig.smtp.service ) options.service = appConfig.smtp.service;
+    if ( config.smtp.host ) options.host = config.smtp.host;
+    if ( config.smtp.service ) options.service = config.smtp.service;
 
-    if (appConfig.smtp.port) options.port = appConfig.smtp.port;
+    if (config.smtp.port) options.port = config.smtp.port;
 
-    if (appConfig.smtp.auth) options.auth = appConfig.smtp.auth;
-    else if (appConfig.smtp.username && appConfig.smtp.password) {
+    if (config.smtp.auth) options.auth = config.smtp.auth;
+    else if (config.smtp.username && config.smtp.password) {
         options.auth = {
-            user: appConfig.smtp.username,
-            pass: appConfig.smtp.password
+            user: config.smtp.username,
+            pass: config.smtp.password
         };
     }
 
-    options.secure = appConfig.smtp.ssl ? true : false;
+    options.secure = config.smtp.ssl ? true : false;
 
-    if (appConfig.smtp.connectionTimeout) options.connectionTimeout = appConfig.smtp.connectionTimeout;
-    if (appConfig.smtp.greetingTimeout) options.greetingTimeout = appConfig.smtp.greetingTimeout;
-    if (appConfig.smtp.socketTimeout) options.socketTimeout = appConfig.smtp.socketTimeout;
-    if (appConfig.smtp.authMethod) options.authMethod = appConfig.smtp.authMethod;
-    if (appConfig.smtp.tls) options.tls = appConfig.smtp.tls;
-    if (appConfig.smtp.ignoreTLS) options.ignoreTLS = appConfig.smtp.ignoreTLS;
+    if (config.smtp.connectionTimeout) options.connectionTimeout = config.smtp.connectionTimeout;
+    if (config.smtp.greetingTimeout) options.greetingTimeout = config.smtp.greetingTimeout;
+    if (config.smtp.socketTimeout) options.socketTimeout = config.smtp.socketTimeout;
+    if (config.smtp.authMethod) options.authMethod = config.smtp.authMethod;
+    if (config.smtp.tls) options.tls = config.smtp.tls;
+    if (config.smtp.ignoreTLS) options.ignoreTLS = config.smtp.ignoreTLS;
     
     return options;
 };
 
 exports.getMailSenderInfo = function () {
-    return appConfig.mailSender;
+    return config.mailSender;
 };
 
 exports.getResetPwdCodeExipired = function () {
-    return appConfig.resetPwdCodeExpired;
+    return config.resetPwdCodeExpired;
 };
 
-exports.getHost = function () {
-    return appConfig.host;
-}
+exports.getAppHost = function () {
+    return config.host;
+};
 
 module.exports = exports;

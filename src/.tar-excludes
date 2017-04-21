@@ -1,0 +1,16 @@
+*.development.js*
+.*
+._*.*
+doc
+logs/*.log
+node_modules
+bower_components
+repos/*/*-*
+scripts/deploy
+scripts/private_config.txt
+server/bin
+server/discover_db.js
+server/file.js
+server/**/.*
+server/public/lib/angular-1.5.7/docs
+target

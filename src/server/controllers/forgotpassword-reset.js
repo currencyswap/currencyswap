@@ -15,6 +15,14 @@ var util = require('util');
 module.exports = function (app) {
     var router = app.loopback.Router();
 
+    router.get('/', function (req, res) {
+        var resetCode = req.query.resetCode;
+        userService.checkResetPwdCode(resetCode, function (err) {
+            if (err) return res.status(constant.HTTP_FAILURE_CODE).send(err);
+            else return res.status(constant.HTTP_SUCCESS_CODE).send({});
+        });
+    });
+
     router.post('/', function (req, res) {
         var newPassword = req.body.newPassword;
         var resetCode = req.body.resetCode;

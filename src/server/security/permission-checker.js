@@ -12,9 +12,10 @@ var exports = module.exports;
 var util = require('util');
 var redis = require('../libs/redis');
 var permissionConverter = require('../converters/permission-converter');
+var constant = require('../libs/constants/constants');
 
 var collectPermissionFromRules = function (request, permissionItem) {
-    console.log('permissionItem.rules', permissionItem.rules);
+    //console.log('permissionItem.rules', permissionItem.rules);
     for (let idx in permissionItem.rules) {
         let rule = permissionItem.rules[idx];
 
@@ -37,7 +38,7 @@ var collectRequiredPermissions = function (request, callback) {
         let per = permissionMap.permissions[key];
         let route = routes.getRoute(per.route);
 
-        console.log('route : %s', route);
+        //console.log('route : %s', route);
 
         let pattern = new UrlPattern(route);
 
@@ -95,7 +96,6 @@ var validatePermission = function (permissions, requiredPermissions, callback) {
         }
 
     }
-
     let err = errorUtil.createAppError(errors.PERMISSION_DENIDED);
 
     callback(err);
@@ -103,8 +103,8 @@ var validatePermission = function (permissions, requiredPermissions, callback) {
 };
 
 var checkPermissionInRequest = function (request, permissions, callback) {
-    console.log('PATH %s', request.path);
-    console.log('METHOD %s', request.method);
+    console.log('PATH', request.method, request.path);
+    //console.log('METHOD %s', request.method);
 
     async.waterfall([
         function (next) {
@@ -158,14 +158,31 @@ exports.collectUserPermission = function (username, callback) {
 
                 console.log('collectUserPermissionFormDB Setup user');
                 if (user) {
-
-                    console.log('JSON %s', JSON.stringify(user.toJSON()));
-                    /*redis.setUserInfo(user.toJSON(), function (err, user) {
-                        console.log('never comes here !!!');
-                        if (err) return next(err);
-                        else return next(null, user);
-                    });*/
-                    redis.setUserInfo(user.toJSON());
+                    user = user.toJSON();
+                    console.log('JSON %s', JSON.stringify(user));
+                    if (user.expiredDate) {
+                        var now = new Date();
+                        var expire = (typeof user.expiredDate === 'string' ? new Date(user.expiredDate) : user.expiredDate);
+                        now = now.getTime();
+                        expire = expire.getTime();
+                        if (expire < now) {
+                            console.log('Your account get expired', username, 'Expired Time:', user.expiredDate);
+                            var err = errorUtil.createAppError(errors.USER_ACCOUNT_EXPIRED);
+                            return next(err);
+                        }
+                    }
+                    if (user.status === constant.USER_STATUSES.EXPIRED) {
+                        console.log('Your account get expired', username, 'Expired Time:', user.expiredDate);
+                        var err = errorUtil.createAppError(errors.USER_ACCOUNT_EXPIRED);
+                        return next(err);
+                    }
+                    // TODO Need to remove user session from redis when set user to be blocked
+                    if (user.status === constant.USER_STATUSES.BLOCKED) {
+                        console.log('Your account get blocked', username);
+                        var err = errorUtil.createAppError(errors.USER_ACCOUNT_BLOCKED);
+                        return next(err);
+                    }
+                    redis.setUserInfo(user);
                     return next(null, user);
                 }
             });
@@ -173,7 +190,7 @@ exports.collectUserPermission = function (username, callback) {
         function (user, next) {
             let permissions = permissionConverter.getPermissionsFormUser(user);
 
-            console.log( 'PERMISSION %s', JSON.stringify( permissions ) );
+            //console.log( 'PERMISSION %s', JSON.stringify( permissions ) );
 
             next(null, user, permissions);
         }], function (err, user, permissions) {
@@ -182,7 +199,6 @@ exports.collectUserPermission = function (username, callback) {
 };
 
 exports.checkPermission = function (request, response, callback) {
-    console.log('checkPermission request.body: ', request.body);
     if (!request.currentUser || !request.currentUser.username) {
         let err = errorUtil.createAppError(errors.PERMISSION_DENIDED);
         return response.status(403).send(errorUtil.getResponseError(err));
@@ -216,17 +232,22 @@ exports.checkPermission = function (request, response, callback) {
             if (!err) {
                 return callback();
             }
+            
+            var errMsg = errorUtil.getResponseError(err);
 
-            if (err.code == errors.SERVER_GET_PROBLEM.code ||
-                err.code == errors.INVALID_PERMISSION.code) {
-                return response.status(500).send(errorUtil.getResponseError(err));
+            if (err.code == errors.SERVER_GET_PROBLEM.code || err.code == errors.INVALID_PERMISSION.code) {
+                return response.status(500).send(errMsg);
             } else if (err.code == errors.INVALID_REQUEST_PATH.code) {
-                return response.status(400).send(errorUtil.getResponseError(err));
+                return response.status(400).send(errMsg);
             } else if (err.code == errors.USER_IS_NOT_AVAILABLE.code) {
-                return response.status(403).send(errorUtil.getResponseError(err));
+                return response.status(403).send(errMsg);
+            } else if (err.code == errors.USER_ACCOUNT_EXPIRED.code) {
+                return response.status(403).send(errMsg);
+            } else if (err.code == errors.USER_ACCOUNT_BLOCKED.code) {
+                return response.status(403).send(errMsg);
             } else {
-                let error = errorUtil.createAppError(errors.PERMISSION_DENIDED);
-                return response.status(403).send(errorUtil.getResponseError(error));
+                errMsg = errorUtil.getResponseError(errorUtil.createAppError(errors.PERMISSION_DENIDED));
+                return response.status(403).send(errMsg);
             }
         });
 };

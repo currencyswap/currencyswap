@@ -1,88 +1,41 @@
 <div class="signinpanel" ng-if="isSubmitEmailForm">
-
     <div class="row">
-
-        <div class="col-md-2">
-
-        </div>
-
-        <div class="col-md-8">
+        <div class="col-sm-6 col-sm-offset-3">
             <div class="signin-info">
                 <div class="logopanel">
                     <h1><span>[</span> {{title}} <span>]</span></h1>
                 </div><!-- logopanel -->
             </div><!-- signin0-info -->
-            <br>
-
-            <!--<div class="panel panel-success">
-                <div class="panel-heading">
-                    <h5 class="panel-title">Please fill your registered email to reset your password</h5>
-                </div>
-            </div>&lt;!&ndash; panel &ndash;&gt;-->
-
-            <!--<div class="alert alert-info">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                Please fill your <strong>email</strong> to reset your password
-            </div>-->
-
+        </div>
+    </div>
+    <div class="mb20"></div>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
             <div class="alert alert-warning">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 Please fill your <strong>registered email</strong> to reset your password
             </div>
-
-            <form name="userForm" ng-submit="submitEmail()" novalidate>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <form name="userForm" ng-submit="submitEmail()" novalidate style="background-color: white">
                 <!-- EMAIL -->
                 <div class="form-group" ng-class="{ 'has-error' : (userForm.email.$invalid && !userForm.email.$pristine) || (isEmailNotFound && !userForm.email.$pristine)}">
-                    <input placeholder="example@gmail.com" type="email" name="email" class="form-control" ng-model="verification.submittedEmail" ng-change="onTextBoxChange()">
+                    <input placeholder="example@gmail.com" type="email" name="email" class="form-control" ng-model="verification.submittedEmail" ng-change="onTextBoxChange()" required>
                     <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
-                    <p ng-show="(isEmailNotFound)" class="help-block">
-                        Your email was not found.</p>
+                    <p ng-show="(isEmailNotFound)" class="help-block">Your email was not found.</p>
                 </div>
-                <button type="submit" class="btn btn-block btn-success" ng-disabled="userForm.$invalid">RESET</button>
+                <button type="submit" class="btn btn-block btn-success" ng-disabled="userForm.$invalid">Reset password</button>
+                <div class="mb10"></div>
+                <div align="center" style="padding-bottom: 10px"><a ng-click="backToLogin()" style="color: #428bca;" href="">BACK TO SIGN IN PAGE</a></div>
                 <div class="loaders" align="center" ng-show="gifLoading">
                     <img src="../../../../assets/images/loaders/loader1.gif" alt="">
-                    <!--<img src="images/loaders/loader2.gif" alt="">
-                    <img src="images/loaders/loader3.gif" alt="">
-                    <img src="images/loaders/loader4.gif" alt="">
-                    <img src="images/loaders/loader8.gif" alt="">
-                    <img src="images/loaders/loader9.gif" alt="">
-                    <img src="images/loaders/loader5.gif" alt="">
-                    <img src="images/loaders/loader6.gif" alt="">
-                    <img src="images/loaders/loader7.gif" alt="">
-                    <img src="images/loaders/loader10.gif" alt="">
-                    <img src="images/loaders/loader11.gif" alt="">
-                    <img src="images/loaders/loader12.gif" alt="">
-                    <img src="images/loaders/loader13.gif" alt="">
-                    <img src="images/loaders/loader14.gif" alt="">
-                    <img src="images/loaders/loader15.gif" alt="">
-                    <img src="images/loaders/loader16.gif" alt="">
-                    <img src="images/loaders/loader17.gif" alt="">
-                    <img src="images/loaders/loader18.gif" alt="">
-                    <img src="images/loaders/loader19.gif" alt="">
-                    <img src="images/loaders/loader20.gif" alt="">
-                    <img src="images/loaders/loader21.gif" alt="">
-                    <img src="images/loaders/loader22.gif" alt="">
-                    <img src="images/loaders/loader23.gif" alt="">
-                    <img src="images/loaders/loader24.gif" alt="">
-                    <img src="images/loaders/loader25.gif" alt="">
-                    <img src="images/loaders/loader26.gif" alt="">
-                    <img src="images/loaders/loader27.gif" alt="">
-                    <img src="images/loaders/loader28.gif" alt="">
-                    <img src="images/loaders/loader29.gif" alt="">
-                    <img src="images/loaders/loader30.gif" alt="">-->
                 </div>
             </form>
         </div>
-    </div><!-- row -->
-
-    <div class="signup-footer">
-        <div class="pull-left">
-            &copy; 2014. All Rights Reserved.
-        </div>
-        <div class="pull-right">
-            Currency Swap
-        </div>
     </div>
+    <footer></footer>
 
 </div><!-- forgot password -->
 
@@ -93,6 +46,7 @@
     </div>
 
     <div class="col-md-8">
+        <br>
         <div class="panel panel-success">
             <div class="panel-heading">
                 <div class="panel-btns">
@@ -100,19 +54,12 @@
                 <h3 class="panel-title">Your email was verified successfully</h3>
             </div>
             <div class="panel-body">
-                We sent you an email with the active url to further process of password reset, please help to check your email and click the link within 24 hours inbox
+                We sent you an email with the active url to further process of password reset for your account, please help to check your email and click the link within 24 hours inbox.
             </div>
+            <div align="center"><a ng-click="backToLogin()" href="">BACK TO SIGN IN PAGE</a></div>
         </div>
 
-
-        <div class="signup-footer">
-            <div class="pull-left">
-                &copy; 2014. All Rights Reserved.
-            </div>
-            <div class="pull-right">
-                Currency Swap
-            </div>
-        </div>
+        <footer></footer>
     </div>
 </div><!-- row -->
 

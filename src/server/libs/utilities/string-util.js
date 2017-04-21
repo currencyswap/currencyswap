@@ -30,7 +30,7 @@ exports.decodeBase64 = function (base64Str) {
 exports.encryptString = function (plainText, algorithm, password, inputFormat, outputFormat) {
     var cipher = crypto.createCipher(algorithm, password);
     var encrypted = cipher.update(plainText, inputFormat, outputFormat);
-    encrypted += cipher.final('hex');
+    encrypted += cipher.final(outputFormat);
     return encrypted;
 };
 

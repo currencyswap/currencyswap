@@ -143,7 +143,6 @@ exports.getUserInfo = function (username, callback) {
 exports.checkResetCode = function (email, randomString, callback) {
     exports.get(email, function (err, value) {
         if (err) {
-            console.error('Can not get reset code from redis with key ', email);
             return callback(errorUtil.createAppError(errors.RESET_PWD_CODE_NOT_FOUND));
         } else {
             if (!value) return callback(errorUtil.createAppError(errors.RESET_PWD_CODE_NOT_FOUND));

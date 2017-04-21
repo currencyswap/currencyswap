@@ -1,24 +1,25 @@
 'use strict';
-
-var exports = module.exports;
-var errors = require('./errors/errors');
-var errorUtil = require('./errors/error-util');
-
-var redis = require('./redis');
-const util = require('util');
-const httpHeaderUtil = require('./utilities/http-header-util');
-const token = require('./token');
+var util = require('util');
+var token = require('./token');
 var async = require('async');
 
+var errors = require('./errors/errors');
+var errorUtil = require('./errors/error-util');
+var constant = require('../libs/constants/constants');
+var ExpError = require('../libs/errors/error-common');
+var httpHeaderUtil = require('./utilities/http-header-util');
+var redis = require('./redis');
+
+var exports = module.exports;
+
 exports.authenticateByToken = function (request, response, callback) {
-    console.log('authenticateByToken request.body: ', request.body);
     async.waterfall([
         function (next) {
             httpHeaderUtil.getAuthBearerHeader(request, next);
         },
         function (headerStr, next) {
             token.getSignature(headerStr, function (err, sign) {
-                console.log('Signnature : %s', sign);
+                //console.log('Signnature : %s', sign);
                 next(err, headerStr, sign);
             });
         },
@@ -35,8 +36,8 @@ exports.authenticateByToken = function (request, response, callback) {
 
                 let obj = JSON.parse(value);
 
-                console.log('secret : %s', obj.secret);
-                console.log('username : %s', obj.username);
+                //console.log('secret : %s', obj.secret);
+                //console.log('username : %s', obj.username);
 
                 next(err, headerStr, obj.secret, obj.username);
             });
@@ -47,7 +48,7 @@ exports.authenticateByToken = function (request, response, callback) {
             });
         },
         function (decode, username, next) {
-            console.log('secret : %s', JSON.stringify(decode));
+            //console.log('secret : %s', JSON.stringify(decode));
             if (decode.username !== username) {
                 let err = errorUtil.createAppError(errors.INVALID_TOKEN_API_KEY);
                 err.message = util.format(err.message, decode.username);
@@ -60,12 +61,31 @@ exports.authenticateByToken = function (request, response, callback) {
             request.currentUser = {
                 username: username
             };
-
-            next(null);
+            redis.getUserInfo(username, function (err, user) {
+                if (user && user.username) {
+                    request.currentUser = user;
+                    if (user.expiredDate) {
+                        var now = new Date();
+                        var expire = (typeof user.expiredDate === 'string' ? new Date(user.expiredDate) : user.expiredDate);
+                        now = now.getTime();
+                        expire = expire.getTime();
+                        if (expire < now) {
+                            console.log('User get expired', username, 'Expired Time:', user.expiredDate);
+                            redis.removeUserInfo(username);
+                            var err = errorUtil.createAppError(errors.USER_ACCOUNT_EXPIRED);
+                            return next(err);
+                        }
+                    }
+                }
+                return next(null);
+            });
         }
     ], function (err) {
         if (!err) return callback();
         console.error('ERROR [%s]: %s', err.name, err.message);
-        return response.status(299).send(err);
+        if (ExpError.isReqService(request)) {
+            return response.status(constant.HTTP_FAILURE_CODE).send(err);
+        }
+        return ExpError.errorHandler404(request, response);
     });
 };

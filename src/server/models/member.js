@@ -17,20 +17,23 @@ module.exports = function (Member) {
         next();
     });
 
-    Member.findByUserId = function (userId, isActivated, callback) {
-
+    Member.findByUserId = function (userId, callback) {
+        /*console.log('userId: ', userId);
+        if (typeof userId !== 'number') {
+            userId = parseInt(userId);
+        }
         if (typeof isActivated == 'function') {
             callback = isActivated;
             isActivated = null;
-        }
+        }*/
 
         var where = {
             id: userId
         };
 
-        if (isActivated !== undefined && isActivated !== null) {
+        /*if (isActivated !== undefined && isActivated !== null) {
             where.isActivated = isActivated;
-        }
+        }*/
 
         var includeGroups = {
             relation: 'groups'
@@ -40,9 +43,21 @@ module.exports = function (Member) {
             relation: 'addresses'
         };
 
+        var includeInvitees = {
+            relation: 'invitees'
+        };
+
+        var includeInviters = {
+            relation: 'inviters'
+        };
+
+        var includeBankInfo = {
+            relation: 'bankInfo'
+        };
+
         var filter = {
             where: where,
-            include: [includeGroups, includeAddresses]
+            include: [includeGroups, includeAddresses, includeInvitees, includeInviters, includeBankInfo]
         };
 
         Member.findOne(filter, function (err, user) {
@@ -84,9 +99,13 @@ module.exports = function (Member) {
             relation: 'addresses'
         };
 
+        var includeBankInfo = {
+            relation: 'bankInfo'
+        };
+
         var filter = {
             where: where,
-            include: [includeGroups, includeAddresses]
+            include: [includeGroups, includeAddresses, includeBankInfo]
         };
 
         Member.findOne(filter, function (err, user) {
@@ -147,6 +166,7 @@ module.exports = function (Member) {
         var filter = {
             where: where
         };
+
         Member.findOne(filter, function (err, user) {
 
             if (err) {
@@ -171,6 +191,27 @@ module.exports = function (Member) {
         });
     };
 
+    Member.findUsersFollowStatus = function (status, callback) {
+        var where = {
+            status: status
+        };
+        var includeAddress = {
+            relation: 'addresses'
+        };
+
+        var filter = {
+            where: where,
+            include: includeAddress
+        };
+        Member.findOne(filter, function (err, user) {
+            if (err) return callback(errorUtil.createAppError(errors.SERVER_GET_PROBLEM));
+            else {
+                if (!user) return callback(errorUtil.createAppError(errors.NO_USER_FOUND_IN_DB));
+                return callback(null, user);
+            }
+        })
+    };
+
     Member.findUserDetailWithEmail = function (userId, callback) {
         var where = {
             id: userId
@@ -186,11 +227,21 @@ module.exports = function (Member) {
         };
 
         Member.findOne(filter, function (err, user) {
-            if (err) return callback(errorUtil.createAppError(errors.SERVER_GET_PROBLEM));
-            else {
-                if (!user) return callback(errorUtil.createAppError(errors.NO_USER_FOUND_IN_DB));
-                return callback(null, user);
+            if (err) {
+                console.error('findOne error: ', err);
+                return callback(errorUtil.createAppError(errors.SERVER_GET_PROBLEM));
             }
+
+            if (!user)  {
+
+                var appError = errorUtil.createAppError( errors.MEMBER_INVALID_USERID );
+
+                appError.message = util.format(appError.message, userId);
+
+                return callback( appError );
+            }
+
+            return callback(null, user);
         })
     };
 
@@ -212,7 +263,7 @@ module.exports = function (Member) {
         })
     };
 
-    Member.findUserByPassport = function (nationalId, callback) {
+    Member.findUserByNationalId = function (nationalId, callback) {
         var where = {
             nationalId: nationalId
         };
@@ -222,9 +273,15 @@ module.exports = function (Member) {
         };
 
         Member.findOne(filter, function (err, user) {
-            if (err) return callback(errorUtil.createAppError(errors.SERVER_GET_PROBLEM));
+            if (err) {
+                console.log('error on finding user by nationalid: ', err);
+                return callback(errorUtil.createAppError(errors.SERVER_GET_PROBLEM));
+            }
             else {
-                if (!user) return callback(errorUtil.createAppError(errors.NO_USER_FOUND_IN_DB));
+                if (!user) {
+                    console.log('no user found with this nationalid');
+                    return callback(errorUtil.createAppError(errors.NO_USER_FOUND_IN_DB));
+                }
                 return callback(null, user);
             }
         })

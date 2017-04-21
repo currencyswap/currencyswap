@@ -2,37 +2,65 @@
   "name": "Order",
   "base": "PersistedModel",
   "idInjection": true,
+  "indexes": {
+    "ORDER_CODE_UNQ_IDX": {
+      "columns": "code",
+      "kind": "unique"
+    },
+    "ORDER_OWNER_ID_IDX": {
+      "columns": "ownerId"
+    },
+    "ORDER_ACCEPTER_ID_IDX": {
+      "columns": "accepterId"
+    },
+    "ORDER_GIV_CURR_ID_IDX": {
+      "columns": "giveCurrencyId"
+    },
+    "ORDER_GET_CURR_ID_IDX": {
+      "columns": "getCurrencyId"
+    },
+    "ORDER_STATUS_ID_IDX": {
+      "columns": "statusId"
+    }
+  },
   "options": {
     "validateUpsert": true
   },
   "properties": {
     "code": {
       "type": "string",
-      "required": true,
-      "index": {
-        "unique": true
-      }
+      "length": 64,
+      "required": true
     },
-    "createdDate": {
+    "created": {
       "type": "date",
       "required": true,
       "defaultFn": "now"
     },
-    "updatedDate": {
+    "updated": {
       "type": "date",
       "required": true,
       "defaultFn": "now"
     },
-    "closedDate": {
-      "type": "date"
+    "expired": {
+      "type": "date",
+      "required": true
     },
     "rate": {
       "type": "number",
-      "required": true
+      "required": true,
+         "dataType": "FLOAT",
+      "mysql":{
+         "dataType": "FLOAT"
+      }
     },
     "give": {
       "type": "number",
-      "required": true
+      "required": true,
+         "dataType": "FLOAT",
+      "mysql":{
+         "dataType": "FLOAT"
+      }
     },
     "giveCurrencyId": {
       "type": "number",
@@ -40,7 +68,11 @@
     },
     "get": {
       "type": "number",
-      "required": true
+      "required": true,
+         "dataType": "FLOAT",
+      "mysql":{
+         "dataType": "FLOAT"
+      }
     },
     "getCurrencyId": {
       "type": "number",
@@ -53,10 +85,9 @@
     "accepterId": {
       "type": "number"
     },
-    "status": {
-      "type": "string",
-      "required": true,
-      "default": "Submitted"
+    "statusId": {
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],
@@ -83,10 +114,30 @@
     },
     "activities": {
       "type": "hasMany",
-      "model": "Activity",
-      "foreignKey": "orderId",
-      "keyThrough": "activityId",
-      "through": "OrderActivity"
+      "model": "OrderActivity",
+      "foreignKey": "orderId"
+    },
+    "status": {
+      "type": "belongsTo",
+      "model": "StatusType",
+      "foreignKey": "statusId"
+    },
+    "bankInfoOfOrder": {
+      "type": "hasOne",
+      "model": "OrderBankInfo",
+      "foreignKey": "orderId"
+    },
+    "initializerBankInfo": {
+      "type": "hasMany",
+      "model": "BankInfo",
+      "through": "OrderBankInfo",
+      "keyThrough": "initializerBankInfoId"
+    },
+    "accepterBankInfo": {
+      "type": "hasMany",
+      "model": "BankInfo",
+      "through": "OrderBankInfo",
+      "keyThrough": "accepterBankInfoId"
     }
   },
   "acls": [],

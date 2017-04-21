@@ -2,28 +2,35 @@
   "name": "Currency",
   "base": "PersistedModel",
   "idInjection": true,
+  "indexes": {
+    "CURRENCY_CODE_UNQ_IDX": {
+      "columns": "code",
+      "kind": "unique"
+    }
+  },
   "options": {
     "validateUpsert": true
   },
   "properties": {
+     "position": {
+      "type": "number",
+      "required": true,
+      "default": 0,
+      "description": "The POSITION that use to order the list of currency which one will be important one and show on top of the list"
+    },
     "code": {
       "type": "string",
-      "required": true,
-      "index": {
-        "unique": true
-      }
+      "length": 32,
+      "required": true
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "length": 128
     },
-    "number": {
-      "type": "number"
-    },
-    "digits": {
-      "type": "number"
-    },
-    "country": {
-      "type": "string"
+    "region": {
+      "type": "string",
+      "length": 128,
+      "description":"The REGION base on the location of geographic that the country/money belong to"
     }
   },
   "validations": [],

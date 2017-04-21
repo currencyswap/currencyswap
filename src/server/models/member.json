@@ -2,59 +2,68 @@
   "name": "Member",
   "base": "PersistedModel",
   "idInjection": true,
+  "indexes": {
+    "MEMBER_USERNAME_UNQ_IDX": {
+      "columns": "username",
+      "kind": "unique"
+    },
+    "MEMBER_EMAIL_UNQ_IDX": {
+      "columns": "email",
+      "kind": "unique"
+    }
+  },
   "options": {
     "validateUpsert": true
   },
+  "hidden": [
+    "password"
+  ],
   "properties": {
     "username": {
       "type": "string",
-      "required": true,
-      "index": {
-        "unique": true
-      }
+      "length": 64,
+      "required": true
     },
     "email": {
       "type": "string",
-      "required": true,
-      "index": {
-        "unique": true
-      }
+      "length": 64,
+      "required": true
     },
     "password": {
       "type": "string",
+      "length": 64,
       "required": true
     },
     "fullName": {
-      "type": "string"
+      "type": "string",
+      "length": 128
     },
     "birthday": {
-      "type": "date",
-      "postgresql": {
-        "dataType": "date",
-        "nullable": "YES"
-      }
-    },
-    "nationalId": {
-      "type": "string"
-    },
-    "cellphone": {
-      "type": "string"
-    },
-    "profession": {
-      "type": "string"
-    },
-    "registeredDate": {
       "type": "date"
     },
-    "expiredDate": {
+    "nationalId": {
+      "type": "string",
+      "length": 128
+    },
+    "cellphone": {
+      "type": "string",
+      "length": 32
+    },
+    "profession": {
+      "type": "string",
+      "length": 256
+    },
+    "registeredDate": {
       "type": "date",
-      "postgresql": {
-        "dataType": "date",
-        "nullable": "YES"
-      }
+      "required": true,
+      "defaultFn": "now"
+    },
+    "expiredDate": {
+      "type": "date"
     },
     "status": {
       "type": "string",
+      "length": 128,
       "required": true
     }
   },
@@ -70,6 +79,25 @@
     "addresses": {
       "type": "hasMany",
       "model": "Address",
+      "foreignKey": "memberId"
+    },
+    "invitees": {
+      "type": "hasMany",
+      "model": "Member",
+      "foreignKey": "inviterId",
+      "through": "Invitations",
+      "keyThrough": "inviteeId"
+    },
+    "inviters": {
+      "type": "hasMany",
+      "model": "Member",
+      "foreignKey": "inviteeId",
+      "through": "Invitations",
+      "keyThrough": "inviterId"
+    },
+    "bankInfo": {
+      "type": "hasMany",
+      "model": "BankInfo",
       "foreignKey": "memberId"
     }
   },

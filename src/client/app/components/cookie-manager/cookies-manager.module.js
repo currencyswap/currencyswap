@@ -11,7 +11,7 @@ angular.module('cookieManager', ['ngCookies'])
                 var obj = getInfoFormToken(token);
 
                 if ( !obj.avatarUrl ) {
-                    obj.avatarUrl = global.DEF_AVATAR;
+                    obj.avatarUrl = global.DEF_AVATAR_URL + obj.username;
                 }
 
                 $cookies.put(global.TOKEN, token, options);
@@ -30,7 +30,9 @@ angular.module('cookieManager', ['ngCookies'])
             },
             getCurrentUser: function () {
                 var userString = $cookies.get(global.CURRENT_USER);
-                return JSON.parse(userString);
+                var json = {};
+                try {json = JSON.parse(userString);}catch(e){}
+                return json;
             },
             getUserEmail: function () {
                 return $cookies.get(global.USER_EMAIL);

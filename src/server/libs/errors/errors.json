@@ -167,9 +167,9 @@
         "code": 82,
         "message": "{ERROR_TX_COMMIT}"
     },
-    "PASSPORT_EXISTED" : {
+    "NATIONAL_ID_EXISTED" : {
         "code": 83,
-        "message": "{PASSPORT_EXISTED}"
+        "message": "{NATIONAL_ID_EXISTED}"
     },
     "CELLPHONE_EXISTED" : {
         "code": 84,
@@ -178,5 +178,133 @@
     "INVALID_PASSWORD" : {
         "code": 85,
         "message": "{INVALID_PASSWORD}"
+    },
+    "INVALID_PARAMETER_INPUT" : {
+        "code": 86,
+        "message": "{INVALID_PARAMETER_INPUT}"
+    },
+    "ACCOUNT_IS_EXPIRED": {
+        "code": 87,
+        "message": "{ACCOUNT_IS_EXPIRED}"
+    },
+    "UNKNOWN_GROUP": {
+        "code": 88,
+        "message": "{UNKNOWN_GROUP}"
+    },
+    "CANNOT_SET_YOUR_OWN_ROLE": {
+        "code": 89,
+        "message": "{CANNOT_SET_YOUR_OWN_ROLE}"
+    },
+    "CANNOT_FIND_ADDRESS_FOR_USER": {
+        "code": 90,
+        "message": "{CANNOT_FIND_ADDRESS_FOR_USER}"
+    },
+    "USERNAME_EXCEED_MAX_LENGTH": {
+        "code": 91,
+        "message": "{USERNAME_EXCEED_MAX_LENGTH}"
+    },
+    "PASSWORD_EXCEED_MAX_LENGTH": {
+        "code": 92,
+        "message": "{PASSWORD_EXCEED_MAX_LENGTH}"
+    },
+    "EMAIL_EXCEED_MAX_LENGTH": {
+        "code": 93,
+        "message": "{EMAIL_EXCEED_MAX_LENGTH}"
+    },
+    "REQUEST_NO_USERNAME": {
+        "code": 94,
+        "message": "{REQUEST_NO_USERNAME}"
+    },
+    "USERNAME_IS_NOT_STRING": {
+        "code": 95,
+        "message": "{USERNAME_IS_NOT_STRING}"
+    },
+    "REQUEST_NO_PASSWORD": {
+        "code": 96,
+        "message": "{REQUEST_NO_PASSWORD}"
+    },
+    "PASSWORD_IS_NOT_STRING": {
+        "code": 97,
+        "message": "{PASSWORD_IS_NOT_STRING}"
+    },
+    "REQUEST_NO_EMAIL": {
+        "code": "98",
+        "message": "{REQUEST_NO_EMAIL}"
+    },
+    "EMAIL_IS_NOT_STRING": {
+        "code": 99,
+        "message": "{EMAIL_IS_NOT_STRING}"
+    },
+    "EMAIL_IS_INVALID": {
+        "code": 100,
+        "message": "{EMAIL_IS_INVALID}"
+    },
+    "FULLNAME_IS_NOT_STRING": {
+        "code": 101,
+        "message": "{FULLNAME_IS_NOT_STRING}"
+    },
+    "FULLNAME_EXCEED_MAX_LENGTH": {
+        "code": 102,
+        "message": "{FULLNAME_EXCEED_MAX_LENGTH}"
+    },
+    "CELLPHONE_EXCEED_MAX_LENGTH": {
+        "code": 103,
+        "message": "{CELLPHONE_EXCEED_MAX_LENGTH}"
+    },
+    "PROFESSION_EXCEED_MAX_LENGTH": {
+        "code": 104,
+        "message": "{PROFESSION_EXCEED_MAX_LENGTH}"
+    },
+    "NATIONALID_EXCEED_MAX_LENGTH": {
+        "code": 105,
+        "message": "{NATIONALID_EXCEED_MAX_LENGTH}"
+    },
+    "BIRTHDAY_IS_NOT_DATE_TYPE": {
+        "code": 106,
+        "message": "{BIRTHDAY_IS_NOT_DATE_TYPE}"
+    },
+    "INVALID_INPUT_TYPE": {
+        "code": 107,
+        "message": "{INVALID_INPUT_TYPE}"
+    },
+    "INVALID_INPUT_DATA": {
+        "code": 108,
+        "message": "{INVALID_INPUT_DATA}"
+    },
+    "BIRTHDAY_GREATER_THAN_CURRENT_DATE": {
+        "code": 109,
+        "message": "{BIRTHDAY_GREATER_THAN_CURRENT_DATE}"
+    },
+    "USER_ACCOUNT_EXPIRED": {
+         "code": 110,
+         "message": "{USER_ACCOUNT_EXPIRED}"
+     },
+     "USER_ACCOUNT_BLOCKED": {
+         "code": 111,
+         "message": "{USER_ACCOUNT_BLOCKED}"
+     },
+    "SAVING_PASSWORD_ERROR": {
+        "code": 112,
+        "message": "{SAVING_PASSWORD_ERROR}"
+    },
+    "NO_INVITER": {
+        "code": 113,
+        "message": "{NO_INVITER}"
+    },
+    "ACCOUNT_IS_BLOCKED": {
+        "code": 114,
+        "message": "{ACCOUNT_IS_BLOCKED}"
+    },
+    "BANK_ACC_NUM_EXISTED": {
+        "code": 115,
+        "message": "{BANK_ACC_NUM_EXISTED}"
+    },
+    "IMAGE_EXCEEDS_MAX_SIZE": {
+        "code": 116,
+        "message": "{IMAGE_EXCEEDS_MAX_SIZE}"
+    },
+    "PAYMENT_EVIDENCE_NOT_FOUND": {
+        "code": 117,
+        "message": "{PAYMENT_EVIDENCE_NOT_FOUND}"
     }
 }

@@ -1,0 +1,29 @@
+{
+  "name": "OrderBankInfo",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "indexes": {
+    "ORDER_BANK_INFO_ID_UNQ_IDX": {
+      "columns": "orderId",
+      "kind": "unique"
+    }
+  },
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "orderId": {
+      "type": "number"
+    },
+    "initializerBankInfoId": {
+      "type": "number"
+    },
+    "accepterBankInfoId": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

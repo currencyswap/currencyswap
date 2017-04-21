@@ -1,254 +1,191 @@
-<div class="signuppanel">
-
-    <div class="col-sm-6 col-sm-offset-3">
-        <form name="registerForm">
-            <fieldset ng-disabled="!isEditting">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <div class="row">
-                            <h2 class="nomargin"><b><u>{{model.fullName}}</u></b></h2>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <a href="#">{{model.email}}</a>
-                        </div>
-                        <br>
-                    </div>
+<section>
+    <div class="support-content">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="form-group my-profile">
                     <form class="form-vertical">
-                        <div class="col-sm-3">
+                        <div class="pull-left formAvatar">
                             <div class="row">
-                                <img ng-src="/config/media/{{model.username}}?{{randomNumImg}}" alt="Mountain View"
-                                     style="width:100px;height:120px;" class="pull-right">
+                                <img class="img-circle avatar-size avatar-align" ng-src="/config/media/{{model.username}}?{{randomNumImg}}" alt="Avatar Image">
                             </div>
                             <div class="row">
-                                <a type="file" ngf-select="uploadFiles($file, $invalidFiles)"
-                                        accept="image/*" ngf-max-height="1000" ngf-max-size="1MB" class="pull-right">
+                                <a class="avatar-align hand-over" type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+                                   accept="image/*">
                                     Change Avatar
                                 </a>
                             </div>
                         </div>
                     </form>
-                </div>
-                <br>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Username </label>
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text" ng-model="model.username">
+                    <div class="pull-left">
+                        <div class="row">
+                            <h4 class="panel-title">{{fullName}}</h4>
+                            {{model.email}}
+                            <!--<a href="mailto:{{model.email}}">{{model.email}}</a>-->
+                        </div>
                     </div>
                 </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Date of birth</label>
-
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
-                                   is-open="calendarPicker.opened" datepicker-options="dateOptions" ng-required="true"
-                                   ng-model="birthday"
-                                   close-text="Close" alt-input-formats="altInputFormats">
+                <fieldset ng-disabled="!isEditting">
+                    <div class="panel-body panel-body-nopadding">
+                        <form id="msgForm" name="msgForm" novalidate="novalidate">
+                            <div class="form-group">
+                                <label class="control-label">Username</label>
+                                <input class="form-control" type="text" ng-model="model.username"  readonly="readonly">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="fullname">Full Name</label>
+                                <input ng-model="model.fullName" id="fullname" class="form-control"
+                                       type="text" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.FULLNAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.FULLNAME_MAX}}">
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error' : greaterThanCurrentDate}">
+                                <label class="control-label">Birthday</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control"
+                                           uib-datepicker-popup="{{format}}"
+                                           is-open="calendarPicker.opened"
+                                           datepicker-options="dateOptions"
+                                           ng-model="model.birthday"
+                                           close-text="Close"
+                                           alt-input-formats="altInputFormats"
+                                           show-button-bar="false" ng-change="onDOBChange()">
                             <span class="input-group-addon" style="height: 40px">
-                                   <i class="glyphicon glyphicon-calendar" ng-click="openCalendar()"></i></button>
+                                   <i class="glyphicon glyphicon-calendar"  ng-click="openCalendar()" ></i>
                                 </span>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Register Date</label>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
-                                   is-open="calendarPicker.opened" datepicker-options="dateOptions" ng-required="true"
-                                   ng-model="model.registeredDate"
-                                   close-text="Close" alt-input-formats="altInputFormats" readonly>
+                                </div>
+                                <label class="error" ng-show="greaterThanCurrentDate" >Your birthday is greater than current date</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Register Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                           datepicker-options="dateOptions" ng-required="true"
+                                           ng-model="model.registeredDate"
+                                           close-text="Close" alt-input-formats="altInputFormats" readonly>
                             <span class="input-group-addon" style="height: 40px">
-                                   <i class="glyphicon glyphicon-calendar" ng-click="openCalendar()"></i></button>
+                                   <i class="glyphicon glyphicon-calendar" ng-disabled="!isEditting"></i>
                                 </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Expried Date</label>
+                                <input class="form-control" type="text"  uib-datepicker-popup="{{format}}" ng-model="model.expiredDate" readonly>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error' : errorCellphoneExisted}">
+                                <label class="control-label">Cell phone</label>
+                                <input class="form-control" type="text" ng-model="model.cellphone" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.CELLPHONE_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.CELLPHONE_MAX}}" ng-change="onCellphoneChange()">
+                                <label class="error" ng-show="errorCellphoneExisted">Cellphone existed</label>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error' : errorNationalIdExisted}">
+                                <label class="control-label">Passport/National ID</label>
+                                <input class="form-control" type="text" ng-model="model.nationalId" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PP_NATIONAL_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PP_NATIONAL_MAX}}" ng-change="onNationalIdChange()">
+                                <label class="error" ng-show="errorNationalIdExisted" >National ID/Passport ID existed</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Address</label>
+                                <input class="form-control" type="text" ng-model="model.address" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ADDRESS_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ADDRESS_MAX}}">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">City</label>
+                                <input class="form-control" type="text" ng-model="model.city" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.CITY_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.CITY_MAX}}">
+                            </div>
+                            <div class="form-group">
+                                <country-state-user country="model.country" state="model.state"></country-state-user>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Postcode</label>
+                                <input class="form-control" type="text" ng-model="model.postcode" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.POSTCODE_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.POSTCODE_MAX}}">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Profession</label>
+                                <input class="form-control" type="text" ng-model="model.profession" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PROFESSION_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PROFESSION_MAX}}">
+                            </div>
+                        </form>
+                        <div class="mb30"></div>
+                        <hr>
+                        <div class="mb30"></div>
+                        <h4 class="nomargin">Bank Accounts List</h4>
+                        <form id="msgFormBankInfo" name="msgForm" novalidate="novalidate">
+                            <div class="form-group">
+                                <label class="control-label">Bank Accounts</label>
+                                <!--<input class="form-control" type="text" ng-model="model.bankAccountName" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ACC_NAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ACC_NAME_MAX}}">-->
+                                <select id="bankInfoSelect" class="form-control" ng-change="onBankInfoChange(model.choosenExistedBankInfoIndex)" ng-model="model.choosenExistedBankInfoIndex">
+                                    <option ng-repeat="bankInfo in bankInfos" value="{{$index}}">{{bankInfo.bankAccountName}} - {{bankInfo.bankAccountNumber}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Account Name</label>
+                                <input class="form-control" type="text" ng-model="model.bankAccountName" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ACC_NAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ACC_NAME_MAX}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Account Number</label>
+                                <input class="form-control" type="text" ng-disabled="true" value={{model.bankAccountNumber}} minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ACC_NUM_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.ACC_NUM_MAX}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Bank Name</label>
+                                <input class="form-control" type="text" ng-model="model.bankName"  minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MAX}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Bank Sort Code</label>
+                                <input class="form-control" type="text" ng-model="model.bankSortCode"  minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MAX}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Bank International SWIFT Or IBAN Code</label>
+                                <input class="form-control" type="text" ng-model="model.bankSwiftIbanCode"  minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.BANK_NAME_MAX}}">
+                            </div>
+
+                            <div class="form-group">
+                                <country-select country="model.bankCountry"></country-select>
+                            </div>
+                        </form>
+                        <div>
+                            <div class="mb30"></div>
+                            <hr>
+                            <div class="mb30"></div>
+                            <h4 class="nomargin">Change Password</h4>
+                            <form id="msgFormChangePass" name="pswForm" novalidate="novalidate">
+                                <div class="form-group" ng-class="{ 'has-error' : invalidPassword}">
+                                    <label class="control-label">Current Password</label>
+                                    <input class="form-control" type="password" name="currentpassword" ng-model="model.currentPwd" ng-change="onChangeCurrentPwd()" ng-required="model.newPwd || model.passwordCompare">
+                                    <label class="error" ng-show="invalidPassword">Invalid password</label>
+                                    <label class="error" ng-show="(model.newPwd || model.passwordCompare)&&!model.currentPwd">Fill your current password if you want to change it</label>
+                                </div>
+                                <div class="form-group" data-ng-class="{'has-error' : pswForm.password.$invalid && !pswForm.password.$pristine}">
+                                    <label class="control-label">New Password</label>
+                                    <input class="form-control" type="password" name="password" data-ng-model="model.newPwd" minlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PWD_MIN}}" maxlength="{{GLOBAL_CONSTANT.LIMIT_FIELDS_INFO.PWD_MAX}} ng-required="model.currentPwd" ng-change="changeNewPass()">
+                                    <label class="error" ng-show="pswForm.password.$error.minlength">Password is too short.</label>
+                                    <label class="error" ng-show="pswForm.password.$error.required && pswForm.password.$dirty" >This field is required.</label>
+                                </div>
+                                <div class="form-group" data-ng-class="{'has-error' : model.currentPwd && pswForm.passwordCompare.$invalid && !pswForm.passwordCompare.$pristine}">
+                                    <label class="control-label">Re-enter Password</label>
+                                    <input class="form-control" type="password" name="passwordCompare" data-ng-model="model.passwordCompare" ng-required="model.currentPwd" ng-change="changeNewPass()"/>
+                                    <label class="error" ng-show="!checkMatchReInput()">Password does not match.</label>
+                                    <label class="error" ng-show="pswForm.passwordCompare.$error.required && pswForm.passwordCompare.$dirty" >This field is required.</label>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Expried Date</label>
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text"  uib-datepicker-popup="{{format}}" ng-model="model.expiredDate" readonly>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Cell phone</label>
-
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text" ng-model="model.cellphone">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Passport ID</label>
-
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text" ng-model="model.nationalId">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Adrress</label>
-
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text" ng-model="model.address">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">City</label>
-
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text" ng-model="model.city">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <!--<country-state country="model.country" state="model.state" ></country-state>-->
-                    <div class="col-sm-3">
-                        <label class="control-label">Country</label>
-
-                    </div>
-                    <div class="col-sm-9">
-                        <!--<country-state country="model.country" state="user.state" ></country-state>-->
-                        <input class="form-control" type="text" ng-model="model.country">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Postcode </label>
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text" ng-model="model.postcode">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Profession </label>
-
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text" ng-model="model.profession">
-                    </div>
-                </div>
-                <br>
-
-                <br>
-                <div class="row">
-                    <h3>Bank Account</h3>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Account Name </label>
-
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Account Number </label>
-
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Bank </label>
-
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text">
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label class="control-label">Country </label>
-
-                    </div>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text">
-                    </div>
-                </div>
-                <br>
-
-                <div ng-if="isEditting">
+                </fieldset>
+                <div class="panel-footer">
                     <div class="row">
-                        <h3>Change Password</h3>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label class="control-label">Current Password </label>
-
-                        </div>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="password" ng-model="model.currentPwd">
+                        <div class="col-sm-6 col-sm-offset-0">
+                            <button class="btn btn-warning" ng-click="cancelEditting()" ng-if="isEditting">Cancel</button>
+                            <button class="btn btn-success" ng-click="changeStateToEdit()" ng-if="!isEditting">Edit
+                            </button>
+                            <button class="btn btn-success" ng-click="saveUserInfo()" ng-if="isEditting" ng-disabled="pswForm.$invalid || !checkMatchReInput()">Save
+                            </button>
                         </div>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label class="control-label">New Password </label>
-
-                        </div>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="password" ng-model="model.newPwd">
-                        </div>
+                    <div class="loaders" align="center" ng-show="gifLoading">
+                        <img src="../../../assets/images/loaders/loader1.gif" alt="">
                     </div>
-
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label class="control-label">Re-enter Password </label>
-
-                        </div>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="password">
-                        </div>
-                    </div>
+                    <p style="color:green">{{message}}</p>
                 </div>
-                <br>
-
-            </fieldset>
-            <div class="panel-footer">
-                <button class="btn btn-success center-block" ng-click="changeStateToEdit()" ng-if="!isEditting">EDIT
-                </button>
-                <button class="btn btn-success center-block" ng-click="saveUserInfo()" ng-if="isEditting">SAVE
-                </button>
             </div>
-        </form>
+        </div>
     </div>
-
-</div>
+</section>
 

@@ -1,3 +1,4 @@
-module.exports = function(Orderactivity) {
+
+module.exports = function(OrderActivity) {
 
 };

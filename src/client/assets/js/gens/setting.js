@@ -1,0 +1,1 @@
+window.appConfig = {"title":"Currency Swap","footer":"Copyright &copy; 2016","dateFormat":{"datetime":"dd-mm-yy HH:MM","date":"mmm dd,yyyy","time":"HH:MM:ss"},"cookieExpried":86400000};

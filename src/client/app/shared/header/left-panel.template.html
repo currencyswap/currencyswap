@@ -9,18 +9,21 @@
     <!-- This is only visible to small devices -->
     <div class="visible-xs hidden-sm hidden-md hidden-lg">
         <div class="media userlogged">
-            <img alt="" src="{{currUser.avatarUrl}}" class="media-object">
+            <img alt="" data-ng-src="{{user.avatarUrl}}?{{randomNumImg}}" class="media-object">
             <div class="media-body">
-                <h4>{{currUser.fullName}}</h4>
+                <h4>{{user.fullName}}</h4>
             </div>
         </div>
     </div>
     <h5 class="sidebartitle actitle">Account</h5>
     <ul class="nav nav-pills nav-stacked nav-bracket mb30">
-        <li><a href="#!profile"><i class="fa fa-user"></i> <span>Profile</span></a></li>
-        <li><a href="#!notifications"><i class="glyphicon glyphicon-envelope"></i> <span>Notifications</span></a></li>
-        <li><a href="#!help"><i class="fa fa-question-circle"></i> <span>Help</span></a></li>
-        <li><a ng-click="onLogout()"><i class="fa fa-sign-out"></i> <span>Sign Out</span></a></li>
+        <li><a class="hand-over" data-ng-click="accessMenuItem({'route': 'profile'})"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+        <li><a class="hand-over" data-ng-click="accessMenuItem({'route': 'notifications'})"><i class="glyphicon glyphicon-envelope"></i> <span>Notifications</span></a></li>
+        <li><a class="hand-over" data-ng-click="accessMenuItem({'route': 'support'})"><i class="fa fa-support"></i> <span>Support</span></a></li>
+        <li><a class="hand-over" data-ng-click="accessMenuItem({'route': 'help'})"><i class="fa fa-question-circle"></i> <span>Help</span></a></li>
+        <li><a class="hand-over" data-ng-click="accessMenuItem({'route': 'invitation'})"><i class="fa fa-user-plus"></i> <span>Invite</span></a></li>
+        <li><a class="hand-over" ng-if="isAdmin" data-ng-click="accessMenuItem({'route': 'exrate'})"><i class="fa fa-dollar"></i> <span>Exchange Rates</span></a></li>
+        <li><a class="hand-over" data-ng-click="onLogout()"><i class="fa fa-sign-out"></i> <span>Sign Out</span></a></li>
     </ul>
     <h5 class="sidebartitle">Navigation</h5>
 

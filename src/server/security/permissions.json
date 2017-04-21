@@ -37,12 +37,202 @@
             ]
         },
         {
+            "route": "{API_CURRENCIES}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PUT", "POST"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}", "{MAINTAIN_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
             "route": "{API_ORDERS}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PUT", "POST"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}", "{MAINTAIN_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_ORDERS_EDIT}",
             "rules" : [
                 {
                     "methods" : ["GET", "PUT"],
                     "requiredPermissions": [
                         "{VIEW_OWN_ORDERS}", "{MAINTAIN_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },{
+            "route": "{API_ORDERS_LAST_CREATED}",
+            "rules" : [
+                {
+                    "methods" : ["GET"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}", "{MAINTAIN_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_ORDERS_SWAPPING}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PUT"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_ORDERS_CONFIRMED}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PUT"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+		{
+            "route": "{API_ORDERS_CONFIRMED_CANCEL}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PUT", "DELETE", "POST"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_ORDERS_CONFIRMED_CLEAR}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PATCH", "PUT", "DELETE", "POST"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_ORDERS_SWAPPING_CANCEL}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PUT"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+		{
+            "route": "{API_ORDERS_SWAPPING_CONFIRM}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PATCH", "PUT", "DELETE", "POST"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_ORDERS_SUBMITTED_CANCEL}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PATCH", "PUT", "DELETE", "POST"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_ORDERS_SUBMITTED_EDIT}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PATCH", "PUT", "DELETE", "POST"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_ORDERS_SUBMITTED_SWAP}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PATCH", "PUT", "DELETE", "POST"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_ORDERS_SUBMITTED}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PUT"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_ORDERS_SUGGEST}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PUT"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+		{
+            "route": "{API_ORDERS_HISTORY}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PUT"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        }, {
+            "route": "{API_ORDERS_TOTAL}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "PUT"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_ORDERS}"
                     ],
                     "isAlive": true
                 }
@@ -54,7 +244,7 @@
                 {
                     "methods" : ["GET"],
                     "requiredPermissions": [
-                        "{VIEW_ALL_ORDERS}"
+                        "{VIEW_OWN_ORDERS}", "{MAINTAIN_OWN_ORDERS}", "{VIEW_ALL_ORDERS}"
                     ],
                     "isAlive": true
                 },
@@ -78,7 +268,97 @@
                     "isAlive": true
                 }
             ]
+        },
+        {
+            "route": "{API_SUPPORTS}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "POST"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_NOTIFICATIONS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_INVITE}",
+            "rules" : [
+                {
+                    "methods" : ["GET", "POST"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_PERMISSION}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_SUPPORTS_CREATOR}",
+            "rules" : [
+                {
+                    "methods" : ["GET"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_PERMISSION}", "{VIEW_OWN_NOTIFICATIONS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_SUPPORTS_MARKREAD}",
+            "rules" : [
+                {
+                    "methods" : ["POST"],
+                    "requiredPermissions": [
+                        "{VIEW_OWN_PERMISSION}", "{VIEW_OWN_NOTIFICATIONS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_EXRATE}",
+            "rules" : [
+                {
+                    "methods" : ["POST"],
+                    "requiredPermissions": [
+                        "{USER_MANAGEMENT}"
+                    ],
+                    "isAlive": true
+                },
+                {
+                    "methods" : ["GET"],
+                    "requiredPermissions": [
+                        "{USER_MANAGEMENT}", "{MAINTAIN_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_BANK_INFO_ACCOUNT}",
+            "rules" : [
+                {
+                    "methods" : ["GET"],
+                    "requiredPermissions": [
+                        "{MAINTAIN_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
+        },
+        {
+            "route": "{API_PAYMENT_EVIDENCE}",
+            "rules" : [
+                {
+                    "methods" : ["POST"],
+                    "requiredPermissions": [
+                        "{MAINTAIN_OWN_ORDERS}"
+                    ],
+                    "isAlive": true
+                }
+            ]
         }
-
     ]
 }

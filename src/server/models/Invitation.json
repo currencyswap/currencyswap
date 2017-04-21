@@ -1,0 +1,31 @@
+{
+  "name": "Invitations",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "indexes": {
+    "INVITATIONS_INVITEEID_UNQ_IDX": {
+      "columns": "inviteeId",
+      "kind": "unique"
+    },
+    "INVITATIONS_INVITER_IDX": {
+      "columns": "inviterId"
+    }
+  },
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "inviterId": {
+      "type": "number",
+      "required": true
+    },
+    "inviteeId": {
+      "type": "number",
+      "required": true,
+      "id": true
+    }
+  },
+  "validations": [],
+  "acls": [],
+  "methods": {}
+}

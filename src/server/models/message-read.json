@@ -1,0 +1,37 @@
+{
+  "name": "MessageRead",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "indexes": {
+    "MESSAGE_OWNER_ID_IDX": {
+      "columns": "messageId"
+    },
+    "MESSAGE_RECEIVER_ID_IDX": {
+      "columns": "readerId"
+    }
+  },
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "messageId": {
+      "type": "number",
+      "required": true,
+      "id": true
+    },
+    "readerId": {
+      "type": "number",
+      "required": true,
+      "id": true
+    },
+    "created": {
+      "type": "date",
+      "required": true,
+      "default": "now"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,50 @@
+{
+  "name": "BankInfo",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "indexes": {
+    "BANKINFO_BANKACCOUNTNUMBER_UNQ_IDX": {
+      "columns": "bankAccountNumber",
+      "kind": "unique"
+    }
+  },
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "bankAccountName": {
+      "type": "string",
+      "length": 128
+    },
+    "bankAccountNumber": {
+      "type": "string",
+      "length": 128
+    },
+    "bankName": {
+      "type": "string",
+      "length": 128
+    },
+    "bankCountry": {
+      "type": "string",
+      "length": 128
+    },
+    "bankSortCode": {
+      "type": "string",
+      "length": 128
+    },
+    "bankSwiftIbanCode": {
+      "type": "string",
+      "length": 128
+    }
+  },
+  "validations": [],
+  "relations": {
+    "member": {
+      "type": "belongsTo",
+      "model": "Member",
+      "foreignKey": "memberId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

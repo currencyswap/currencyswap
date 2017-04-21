@@ -1,3 +1,3 @@
 'use-strict';
 
-angular.module('errorPage', ['ngResource']);
+angular.module('errorPage', ['ngResource', 'ngRoute']);
